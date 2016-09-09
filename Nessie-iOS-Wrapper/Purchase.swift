@@ -9,38 +9,50 @@
 import Foundation
 import SwiftyJSON
 
-public class Purchase {
-    public let status:String!
-    public let medium:TransactionMedium!
-    public let payerId:String!
-    public let amount:Int!
-    public let type:String!
-    public var transactionDate:NSDate!
-    public let description:String!
-    public let purchaseId:String!
-    public let merchantId:String!
+public class Purchase: JsonParser {
+    public let merchantId: String
+    public let status: String?
+    public let medium:TransactionMedium
+    public let payerId: String?
+    public let amount: Int
+    public let type: String?
+    public var purchaseDate: NSDate?
+    public let description: String?
+    public let purchaseId: String
     
-    internal init(data:Dictionary<String,AnyObject>) {
-        self.status = data["status"] as? String
-        self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
-        self.payerId = data["payer_id"] as? String
-        self.amount = data["amount"] as! Int
-        self.type = data["type"] as! String
-        let transactionDateString = data["transaction_date"] as? String
+    public init(merchantId: String, status: String?, medium: TransactionMedium, payerId: String?, amount: Int, type: String, purchaseDate: NSDate?, description: String?, purchaseId: String) {
+        self.merchantId = merchantId
+        self.status = status
+        self.medium = medium
+        self.payerId = payerId
+        self.amount = amount
+        self.type = type
+        self.purchaseDate = purchaseDate
+        self.description = description
+        self.purchaseId = purchaseId
+    }
+    
+    public required init(data: JSON) {
+        self.merchantId = data["merchant_id"].string ?? ""
+        self.status = data["status"].string
+        self.medium = TransactionMedium(rawValue: data["medium"].string ?? "") ?? .Unknown
+        self.payerId = data["payer_id"].string
+        self.amount = data["amount"].int ?? 0
+        self.type = data["type"].string ?? ""
+        let transactionDateString = data["purchase_date"].string
         if let str = transactionDateString {
             if let date = dateFormatter.dateFromString(str) {
-                self.transactionDate = date }
-            else {
-                self.transactionDate = NSDate()
+                self.purchaseDate = date
+            } else {
+                self.purchaseDate = NSDate()
             }
         }
-        self.description = data["description"] as! String
-        self.purchaseId = data["_id"] as! String
-        self.merchantId = data["merchant_id"] as! String
+        self.description = data["description"].string
+        self.purchaseId = data["_id"].string ?? ""
     }
 }
 
-public class DepositRequest {
+public class PurchaseRequest {
     private var requestType: HTTPType!
     private var accountId: String?
     private var depositId: String?

@@ -11,18 +11,29 @@ import SwiftyJSON
 
 public class Deposit: JsonParser {
     public var depositId: String
-    public let status: String?
-    public let medium: TransactionMedium
-    public let payeeId: String?
-    public let amount: Int
-    public let type: String
-    public var transactionDate: NSDate? = nil
-    public let description: String?
+    public var status: BillStatus
+    public var medium: TransactionMedium
+    public var payeeId: String?
+    public var amount: Int
+    public var type: String
+    public var transactionDate: NSDate?
+    public var description: String?
+    
+    public init(depositId: String, status: BillStatus, medium: TransactionMedium, payeeId: String?, amount: Int, type: String, transactionDate: NSDate?, description: String?) {
+        self.depositId = depositId
+        self.status = status
+        self.medium = medium
+        self.payeeId = payeeId
+        self.amount = amount
+        self.type = type
+        self.transactionDate = transactionDate
+        self.description = description
+    }
     
     public required init(data: JSON) {
         self.depositId = data["_id"].string ?? ""
-        self.status = data["_status"].string
-        self.medium = TransactionMedium(rawValue: data["_status"].string ?? "") ?? .Unknown
+        self.status = BillStatus(rawValue: data["status"].string ?? "") ?? .Unknown
+        self.medium = TransactionMedium(rawValue: data["medium"].string ?? "") ?? .Unknown
         self.payeeId = data["payee_id"].string
         self.amount = data["amount"].int ?? 0
         self.type = data["type"].string ?? ""
@@ -80,7 +91,7 @@ public class DepositRequest {
         })
     }
     
-    public func getDepositsFromAccountId(accountId: String, completion: (depositArrays: Deposit?, error: NSError?) -> Void) {
+    public func getDepositsFromAccountId(accountId: String, completion: (depositArrays: Array<Deposit>?, error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -92,22 +103,27 @@ public class DepositRequest {
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Deposit>(data: json)
-                completion(depositArrays: response.object, error: nil)
+                completion(depositArrays: response.requestArray, error: nil)
             }
         })
     }
     
-    public func postDeposit(newDeposit: Deposit, completion: (depositResponse: BaseResponse<Deposit>?, error: NSError?) -> Void) {
+    public func postDeposit(newDeposit: Deposit, accountId: String, completion: (depositResponse: BaseResponse<Deposit>?, error: NSError?) -> Void) {
         requestType = HTTPType.POST
-        
+        self.accountId = accountId
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
                 
         var params: Dictionary<String, AnyObject> = ["medium": newDeposit.medium.rawValue,
                                                      "amount": newDeposit.amount]
-        if let transactionDate = newDeposit.transactionDate {
-            params["transaction_date"] = transactionDate
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-dd-mm"
+        if let transactionDate = newDeposit.transactionDate as NSDate? {
+            let dateString = dateFormatter.stringFromDate(transactionDate)
+            params["transaction_date"] = dateString
         }
+        
         if let description = newDeposit.description {
             params["description"] = description
         }
@@ -132,15 +148,12 @@ public class DepositRequest {
     
     public func putDeposit(updatedDeposit: Deposit, completion: (depositResponse: BaseResponse<Deposit>?, error: NSError?) -> Void) {
         requestType = HTTPType.PUT
-        
+        depositId = updatedDeposit.depositId
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         
         var params: Dictionary<String, AnyObject> = ["medium": updatedDeposit.medium.rawValue,
                                                      "amount": updatedDeposit.amount]
-        if let transactionDate = updatedDeposit.transactionDate {
-            params["transaction_date"] = transactionDate
-        }
         if let description = updatedDeposit.description {
             params["description"] = description
         }

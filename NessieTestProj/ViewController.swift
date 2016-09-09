@@ -32,4 +32,8 @@ class ViewController: UIViewController {
     @IBAction func testCustomers(sender: AnyObject) {
         let _ = CustomerTests()
     }
+
+    @IBAction func testDeposits(sender: AnyObject) {
+        let _ = DepositsTests()
+    }
 }
