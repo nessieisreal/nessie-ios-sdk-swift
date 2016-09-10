@@ -40,4 +40,8 @@ class ViewController: UIViewController {
     @IBAction func testPurchases(sender: AnyObject) {
         let _ = PurchasesTests()
     }
+    
+    @IBAction func testMerchants(sender: AnyObject) {
+        let _ = MerchantTests()
+    }
 }

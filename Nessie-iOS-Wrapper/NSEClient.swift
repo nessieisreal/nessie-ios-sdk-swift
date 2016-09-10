@@ -134,7 +134,11 @@ public class BaseResponse<T:JsonParser> {
     public var message: String?
     
     internal init(data: JSON) {
-        self.requestArray = data.arrayValue.map({T(data:$0)})
+        if (data["data"].null == nil) {
+            self.requestArray = data["data"].arrayValue.map({T(data:$0)})
+        } else {
+            self.requestArray = data.arrayValue.map({T(data:$0)})
+        }
         if (data["objectCreated"].null == nil) {
             self.object = T(data: data["objectCreated"])
         } else {

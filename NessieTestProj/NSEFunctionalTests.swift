@@ -601,3 +601,74 @@ class PurchasesTests {
         })
     }
 }
+
+class MerchantTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        testGetMerchants()
+    }
+    
+    func testGetMerchants() {
+        MerchantRequest().getMerchants(completion: {(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Merchant>? {
+                    if array.count > 0 {
+                        let merchant = array[0] as Merchant?
+                        self.testGetMerchant(merchant!.merchantId)
+                        print(array)
+                    } else {
+                        print("No merchants found")
+                    }
+                }
+            }
+        })
+    }
+    
+    func testGetMerchant(merchantId: String) {
+        MerchantRequest().getMerchant(merchantId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let merchant = response as Merchant? {
+                    print(merchant)
+                }
+            }
+            self.testPostMerchant()
+        })
+    }
+    
+    func testPostMerchant() {
+        let address = Address(streetName: "Street", streetNumber: "1", city: "City", state: "VA", zipCode: "12345")
+        let geocode = Geocode(lng: 1, lat: 0)
+        let merchantToCreate = Merchant(merchantId: "", name: "Name", category: ["Cateogry"], address: address, geocode: geocode)
+        MerchantRequest().postMerchant(merchantToCreate, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let merchantResponse = response as BaseResponse<Merchant>?
+                let message = merchantResponse?.message
+                let merchantCreated = merchantResponse?.object
+                print("\(message): \(merchantCreated)")
+                self.testPutMerchant(merchantCreated!)
+            }
+        })
+    }
+    
+    func testPutMerchant(merchantToBeModified: Merchant) {
+        merchantToBeModified.name = "Raul"
+        MerchantRequest().putMerchant(merchantToBeModified, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let accountResponse = response as BaseResponse<Merchant>?
+                let message = accountResponse?.message
+                let accountCreated = accountResponse?.object
+                print("\(message): \(accountCreated)")
+            }
+        })
+    }
+}
