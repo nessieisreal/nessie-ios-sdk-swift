@@ -672,3 +672,87 @@ class MerchantTests {
         })
     }
 }
+
+class TransfersTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        
+        testGetAllTransfersFromAccount()
+    }
+    
+    var account: Account = Account(accountId: "57d34859e63c5995587e8613", accountType:.CreditCard, nickname: "Hola", rewards: 10, balance: 100, accountNumber: "1234567890123456", customerId: "57d0c20d1fd43e204dd48282")
+    
+    func testGetTransfer(TransferId: String) {
+        TransferRequest().getTransfer(TransferId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let transfer = response as Transfer? {
+                    print(transfer)
+                    self.testPostTransfer()
+                }
+            }
+        })
+    }
+    
+    func testGetAllTransfersFromAccount() {
+        TransferRequest().getTransfersFromAccountId(account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Transfer>? {
+                    if array.count > 0 {
+                        let transfer = array[0] as Transfer!
+                        print(array)
+                        self.testGetTransfer(transfer.transferId)
+                    } else {
+                        print("No transfers found")
+                    }
+                }
+            }
+        })
+    }
+    
+    func testPostTransfer() {
+        let transferToCreate = Transfer(transferId: "", type: .Deposit, transactionDate: NSDate(), status: .Pending, medium: .Balance, payerId: "57d34859e63c5995587e8613", payeeId: "57d359e7e63c5995587e8620", amount: 12, description: "Desc")
+        TransferRequest().postTransfer(transferToCreate, accountId: account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let transferResponse = response as BaseResponse<Transfer>?
+                let message = transferResponse?.message
+                let transferCreated = transferResponse?.object
+                print("\(message): \(transferCreated)")
+                self.testPutTransfer(transferCreated!)
+            }
+        })
+    }
+    
+    func testPutTransfer(transfer: Transfer) {
+        transfer.medium = .Rewards
+        TransferRequest().putTransfer(transfer, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let transferResponse = response as BaseResponse<Transfer>?
+                let message = transferResponse?.message
+                print("\(message)")
+                self.testDeleteTransfer(transfer.transferId)
+            }
+        })
+    }
+    
+    func testDeleteTransfer(transferId: String) {
+        TransferRequest().deleteTransfer(transferId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let TransferResponse = response as BaseResponse<Transfer>?
+                let message = TransferResponse?.message
+                print("\(message)")
+            }
+        })
+    }
+}

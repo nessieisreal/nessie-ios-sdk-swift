@@ -66,17 +66,32 @@
                                     <action selector="testMerchants:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="OAp-0t-b86"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUn-bh-em2">
+                                <state key="normal" title="Transfers"/>
+                                <connections>
+                                    <action selector="testTransfers:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="PNw-pz-weR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ik-8m-12D">
+                                <state key="normal" title="Withdrawals"/>
+                                <connections>
+                                    <action selector="testWithdrawals:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="RXU-qV-h6o"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3X2-eY-jzw" firstAttribute="top" secondItem="ZBS-wY-9QL" secondAttribute="bottom" constant="20" id="7Xa-RD-2XP"/>
                             <constraint firstItem="HLS-fd-Gzv" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="EAO-vW-Xvd"/>
                             <constraint firstItem="zgw-4t-fFJ" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="HIo-6y-ksc"/>
+                            <constraint firstItem="cUn-bh-em2" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="JcC-R8-NsC"/>
                             <constraint firstItem="qtn-qt-YTV" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="Ldg-GH-kyb"/>
+                            <constraint firstItem="6Ik-8m-12D" firstAttribute="top" secondItem="cUn-bh-em2" secondAttribute="bottom" constant="21" id="MeW-v0-C5J"/>
                             <constraint firstItem="KwH-Bm-Pos" firstAttribute="top" secondItem="qtn-qt-YTV" secondAttribute="bottom" constant="22" id="NAS-Xh-HtH"/>
                             <constraint firstItem="HLS-fd-Gzv" firstAttribute="top" secondItem="Z20-Cm-cG3" secondAttribute="bottom" constant="26" id="R1b-6A-1v4"/>
                             <constraint firstItem="KwH-Bm-Pos" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="XkP-v7-4My"/>
                             <constraint firstItem="3X2-eY-jzw" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="ZIc-eE-Yvv"/>
+                            <constraint firstItem="6Ik-8m-12D" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="ZPA-wz-JbL"/>
                             <constraint firstItem="2Ei-TP-IT2" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="b5D-BV-YOr"/>
                             <constraint firstItem="zgw-4t-fFJ" firstAttribute="top" secondItem="HLS-fd-Gzv" secondAttribute="bottom" constant="25" id="bH9-N0-IyU"/>
                             <constraint firstItem="ZBS-wY-9QL" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="dl3-8q-Def"/>
@@ -84,6 +99,7 @@
                             <constraint firstItem="qtn-qt-YTV" firstAttribute="top" secondItem="3X2-eY-jzw" secondAttribute="bottom" constant="27" id="pAE-HZ-Xxk"/>
                             <constraint firstItem="Z20-Cm-cG3" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="pI6-qg-kQo"/>
                             <constraint firstItem="ZBS-wY-9QL" firstAttribute="top" secondItem="2Ei-TP-IT2" secondAttribute="bottom" constant="20" id="uK5-sh-sKI"/>
+                            <constraint firstItem="cUn-bh-em2" firstAttribute="top" secondItem="zgw-4t-fFJ" secondAttribute="bottom" constant="22" id="uy1-72-nrb"/>
                             <constraint firstItem="2Ei-TP-IT2" firstAttribute="top" secondItem="qrX-XH-8GV" secondAttribute="bottom" constant="30" id="yJZ-tm-eeI"/>
                         </constraints>
                     </view>

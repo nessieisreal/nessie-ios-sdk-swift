@@ -44,4 +44,12 @@ class ViewController: UIViewController {
     @IBAction func testMerchants(sender: AnyObject) {
         let _ = MerchantTests()
     }
+    
+    @IBAction func testTransfers(sender: AnyObject) {
+        let _ = TransfersTests()
+    }
+    
+    @IBAction func testWithdrawals(sender: AnyObject) {
+        
+    }
 }

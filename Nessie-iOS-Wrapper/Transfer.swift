@@ -148,7 +148,7 @@ public class TransferRequest {
         var params: Dictionary<String, AnyObject> =
             ["medium": newTransfer.medium.rawValue,
              "payee_id": newTransfer.payeeId,
-             "amount:": newTransfer.amount]
+             "amount": newTransfer.amount]
         
         // optional values
         let dateFormatter = NSDateFormatter()
@@ -192,7 +192,7 @@ public class TransferRequest {
         var params: Dictionary<String, AnyObject> =
             ["medium": updatedTransfer.medium.rawValue,
              "payee_id": updatedTransfer.payeeId,
-             "amount:": updatedTransfer.amount]
+             "amount": updatedTransfer.amount]
         
         if let description = updatedTransfer.description {
             params["description"] = description
