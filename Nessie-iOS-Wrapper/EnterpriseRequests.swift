@@ -158,24 +158,24 @@ public class EnterpriseWithdrawalRequest {
         
         return request!
     }
-    //Sending the request
-    
-    public func send(completion: ((WithdrawalResult) -> Void)?) {
-        
-        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
-            if error != nil {
-                NSLog(error!.description)
-                return
-            }
-            if (completion == nil) {
-                return
-            }
-            
-            let result = WithdrawalResult(data: data!)
-            completion!(result)
-            
-        }).resume()
-    }
+//    //Sending the request
+//    
+//    public func send(completion: ((WithdrawalResult) -> Void)?) {
+//        
+//        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
+//            if error != nil {
+//                NSLog(error!.description)
+//                return
+//            }
+//            if (completion == nil) {
+//                return
+//            }
+//            
+//            let result = WithdrawalResult(data: data!)
+//            completion!(result)
+//            
+//        }).resume()
+//    }
 }
 
 /**********
