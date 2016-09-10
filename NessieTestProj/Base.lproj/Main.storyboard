@@ -56,6 +56,14 @@
                                     <action selector="testDeposits:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="l67-Y4-8l8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLS-fd-Gzv">
+                                <frame key="frameInset" minX="154" minY="368" width="64" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Purchase"/>
+                                <connections>
+                                    <action selector="testPurchases:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="sgm-bO-uBY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

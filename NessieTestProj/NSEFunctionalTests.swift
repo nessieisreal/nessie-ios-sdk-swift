@@ -468,3 +468,136 @@ class DepositsTests {
         })
     }
 }
+
+class PurchasesTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        
+        testGetAllPurchasesFromAccount()
+    }
+    
+    var account: Account = Account(accountId: "57d32a5ce63c5995587e85ec",
+                                   accountType:.CreditCard,
+                                   nickname: "Hola",
+                                   rewards: 10,
+                                   balance: 100,
+                                   accountNumber: "1234567890123456",
+                                   customerId: "57d0c20d1fd43e204dd48282")
+    let merchant: Merchant = Merchant(merchantId: "57cf75cea73e494d8675ec49",
+                                      name: "Best Productions",
+                                      category: ["Production"],
+                                      address: Address(streetName: "Lafayette St.",
+                                        streetNumber: "5901",
+                                        city: "Brooklyn",
+                                        state: "NY",
+                                        zipCode: "07009"),
+                                      geocode: Geocode(lng: -1, lat: 33))
+    
+    func testGetPurchase(PurchaseId: String) {
+        PurchaseRequest().getPurchase(PurchaseId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let purchase = response as Purchase? {
+                    print(purchase)
+                    self.testPostPurchase()
+                }
+            }
+        })
+    }
+    
+    func testGetAllPurchasesFromMerchant() {
+        PurchaseRequest().getPurchasesFromMerchantId(merchant.merchantId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Purchase>? {
+                    if array.count > 0 {
+                        print(array)
+                    } else {
+                        print("No purchases found")
+                    }
+                }
+            }
+            self.testGetAllPurchasesFromMerchantAndAccount()
+        })
+    }
+    
+    func testGetAllPurchasesFromAccount() {
+        PurchaseRequest().getPurchasesFromAccountId(account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Purchase>? {
+                    if array.count > 0 {
+                        let purchase = array[0] as Purchase!
+                        print(array)
+                        self.testGetPurchase(purchase.purchaseId)
+                    } else {
+                        print("No purchases found")
+                    }
+                }
+            }
+        })
+    }
+    
+    func testGetAllPurchasesFromMerchantAndAccount() {
+        PurchaseRequest().getPurchasesFromMerchantAndAccountIds(merchant.merchantId, accountId: account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Purchase>? {
+                    if array.count > 0 {
+                        print(array)
+                    } else {
+                        print("No purchases found")
+                    }
+                }
+            }
+        })
+    }
+
+    func testPostPurchase() {
+        let purchaseToCreate = Purchase(merchantId: "57cf75cea73e494d8675ec49", status: .Cancelled, medium: .Balance, payerId: account.accountId, amount: 4.5, type: "merchant", purchaseDate: NSDate(), description: "Description", purchaseId: "asd")
+        PurchaseRequest().postPurchase(purchaseToCreate, accountId: account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let purchaseResponse = response as BaseResponse<Purchase>?
+                let message = purchaseResponse?.message
+                let purchaseCreated = purchaseResponse?.object
+                print("\(message): \(purchaseCreated)")
+                self.testPutPurchase(purchaseCreated!)
+            }
+        })
+    }
+    
+    func testPutPurchase(purchase: Purchase) {
+        purchase.medium = .Rewards
+        PurchaseRequest().putPurchase(purchase, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let purchaseResponse = response as BaseResponse<Purchase>?
+                let message = purchaseResponse?.message
+                print("\(message)")
+                self.testDeletePurchase(purchase.purchaseId)
+            }
+        })
+    }
+    
+    func testDeletePurchase(purchaseId: String) {
+        PurchaseRequest().deletePurchase(purchaseId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let PurchaseResponse = response as BaseResponse<Purchase>?
+                let message = PurchaseResponse?.message
+                print("\(message)")
+                self.testGetAllPurchasesFromMerchant()
+            }
+        })
+    }
+}

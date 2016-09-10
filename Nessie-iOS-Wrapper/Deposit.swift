@@ -118,7 +118,7 @@ public class DepositRequest {
                                                      "amount": newDeposit.amount]
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-dd-mm"
+        dateFormatter.dateFormat = "yyyy-dd-MM"
         if let transactionDate = newDeposit.transactionDate as NSDate? {
             let dateString = dateFormatter.stringFromDate(transactionDate)
             params["transaction_date"] = dateString

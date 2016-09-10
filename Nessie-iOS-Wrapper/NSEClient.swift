@@ -49,7 +49,7 @@ public class NSEClient {
     }
     
     private init() {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "yyyy-dd-MM"
     }
     
     public func buildRequest(requestType: HTTPType, url: String) -> NSMutableURLRequest {

@@ -425,20 +425,20 @@ public class EnterpriseMerchantRequest {
     }
     //Sending the request
     
-    public func send(completion: ((MerchantResult) -> Void)?) {
-        
-        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
-            if error != nil {
-                NSLog(error!.description)
-                return
-            }
-            if (completion == nil) {
-                return
-            }
-            
-            let result = MerchantResult(data: data!)
-            completion!(result)
-            
-        }).resume()
-    }
+//    public func send(completion: ((MerchantResult) -> Void)?) {
+//        
+//        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
+//            if error != nil {
+//                NSLog(error!.description)
+//                return
+//            }
+//            if (completion == nil) {
+//                return
+//            }
+//            
+//            let result = MerchantResult(data: data!)
+//            completion!(result)
+//            
+//        }).resume()
+//    }
 }

@@ -50,7 +50,7 @@ public class Bill: JsonParser {
         self.nickname = data["nickname"].string ?? ""
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "yyyy-dd-MM"
 
         self.creationDate = dateFormatter.dateFromString(data["creation_date"].string ?? "")
         self.paymentDate = dateFormatter.dateFromString(data["payment_date"].string ?? "")
@@ -168,7 +168,7 @@ public class BillRequest {
         }
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-dd-mm"
+        dateFormatter.dateFormat = "yyyy-dd-MM"
         
         if let paymentDate = newBill.paymentDate as NSDate? {
             let dateString = dateFormatter.stringFromDate(paymentDate)
@@ -211,7 +211,7 @@ public class BillRequest {
         }
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-dd-mm"
+        dateFormatter.dateFormat = "yyyy-dd-MM"
         
         if let paymentDate = updatedBill.paymentDate as NSDate? {
             let dateString = dateFormatter.stringFromDate(paymentDate)

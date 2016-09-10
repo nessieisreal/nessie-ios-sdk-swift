@@ -22,8 +22,8 @@ public class Branch: JsonParser {
         self.branchId = data["_id"].string ?? ""
         self.name = data["name"].string ?? ""
         self.phoneNumber = data["phone_number"].string ?? ""
-        self.hours = data["hours"].arrayValue.map({$0.string!})
-        self.notes = data["notes"].arrayValue.map({$0.string!})
+        self.hours = data["hours"].arrayValue.map({$0.string ?? ""})
+        self.notes = data["notes"].arrayValue.map({$0.string ?? ""})
         self.address = Address(data: data["address"])
         self.geocode = Geocode(data: data["geocode"])
     }

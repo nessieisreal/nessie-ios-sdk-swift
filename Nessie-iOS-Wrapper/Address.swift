@@ -18,6 +18,10 @@ public class Geocode {
         lat = data["lat"].number ?? 0
     }
 
+    public init(lng: NSNumber, lat: NSNumber) {
+        self.lng = lng
+        self.lat = lat
+    }
 }
 
 public class Address {
