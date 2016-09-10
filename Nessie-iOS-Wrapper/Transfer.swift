@@ -96,6 +96,7 @@ public class TransferRequest {
     }
     
     // MARK: API Requests
+    
     // GET /accounts/{id}/transfers
     public func getTransfersFromAccountId(accountId: String, completion: (transferArray: Array<Transfer>?, error: NSError?) -> Void) {
         requestType = HTTPType.GET
@@ -184,6 +185,7 @@ public class TransferRequest {
     public func putTransfer(updatedTransfer: Transfer, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
         requestType = HTTPType.PUT
         transferId = updatedTransfer.transferId
+        
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         
