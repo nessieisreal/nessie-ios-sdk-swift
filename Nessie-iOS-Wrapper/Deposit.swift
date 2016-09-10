@@ -9,6 +9,18 @@
 import Foundation
 import SwiftyJSON
 
+public enum TransactionMedium : String {
+    case Balance = "balance"
+    case Rewards = "rewards"
+    case Unknown
+}
+
+public enum TransactionType : String {
+    case Payee = "payee"
+    case Payer = "payer"
+    case Unknown
+}
+
 public class Deposit: JsonParser {
     public var depositId: String
     public var status: BillStatus

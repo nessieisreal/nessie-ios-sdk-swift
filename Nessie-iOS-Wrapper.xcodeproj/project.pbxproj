@@ -33,7 +33,6 @@
 		B8C549FD1ACEE595002206AC /* NessieFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; };
 		B8C54A041ACEE595002206AC /* Nessie_iOS_WrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C54A031ACEE595002206AC /* Nessie_iOS_WrapperTests.swift */; };
 		B8C54A0E1ACEE5A6002206AC /* NSEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C54A0D1ACEE5A6002206AC /* NSEClient.swift */; };
-		B8C54A101ACEE5F3002206AC /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C54A0F1ACEE5F3002206AC /* Transaction.swift */; };
 		EADC8342DB705A16CD0268A1 /* Pods_Nessie_iOS_Wrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4043BC7A9BA047A099E40B47 /* Pods_Nessie_iOS_Wrapper.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F9CEE15C5FE77CBF8EA941DF /* Pods_NessieTestProj.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE40FF841192D654BF4C793 /* Pods_NessieTestProj.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -112,7 +111,6 @@
 		B8C54A021ACEE595002206AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C54A031ACEE595002206AC /* Nessie_iOS_WrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nessie_iOS_WrapperTests.swift; sourceTree = "<group>"; };
 		B8C54A0D1ACEE5A6002206AC /* NSEClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSEClient.swift; sourceTree = "<group>"; };
-		B8C54A0F1ACEE5F3002206AC /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		CD131C9BC59CF05889A291E7 /* Pods-NessieTestProj.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NessieTestProj.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NessieTestProj/Pods-NessieTestProj.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -242,7 +240,6 @@
 				5BF9F35B1B98A902000D2D4D /* Transfer.swift */,
 				B85401A51B0AE49500031001 /* Withdrawal.swift */,
 				5BB790531B9670A800488749 /* Merchant.swift */,
-				B8C54A0F1ACEE5F3002206AC /* Transaction.swift */,
 				B86E4A7C1B0BD3C00076A6D0 /* EnterpriseRequests.swift */,
 			);
 			path = "Nessie-iOS-Wrapper";
@@ -562,7 +559,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B85401A61B0AE49500031001 /* Withdrawal.swift in Sources */,
-				B8C54A101ACEE5F3002206AC /* Transaction.swift in Sources */,
 				B8C54A0E1ACEE5A6002206AC /* NSEClient.swift in Sources */,
 				B8411CAC1AF9706B00047389 /* ATM.swift in Sources */,
 				B85401A41B0A895400031001 /* Deposit.swift in Sources */,
