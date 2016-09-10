@@ -756,3 +756,87 @@ class TransfersTests {
         })
     }
 }
+
+class WithdrawalsTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        
+        testGetAllWithdrawalsFromAccount()
+    }
+    
+    var account: Account = Account(accountId: "57d34859e63c5995587e8613", accountType:.CreditCard, nickname: "Hola", rewards: 10, balance: 100, accountNumber: "1234567890123456", customerId: "57d0c20d1fd43e204dd48282")
+    
+    func testGetWithdrawal(WithdrawalId: String) {
+        WithdrawalRequest().getWithdrawal(WithdrawalId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let withdrawal = response as Withdrawal? {
+                    print(withdrawal)
+                    self.testPostWithdrawal()
+                }
+            }
+        })
+    }
+    
+    func testGetAllWithdrawalsFromAccount() {
+        WithdrawalRequest().getWithdrawalsFromAccountId(account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Withdrawal>? {
+                    if array.count > 0 {
+                        let withdrawal = array[0] as Withdrawal!
+                        print(array)
+                        self.testGetWithdrawal(withdrawal.withdrawalId)
+                    } else {
+                        print("No withdrawals found")
+                    }
+                }
+            }
+        })
+    }
+    
+    func testPostWithdrawal() {
+        let withdrawalToCreate = Withdrawal(withdrawalId: "", type: .Deposit, transactionDate: NSDate(), status: .Cancelled, medium: .Balance, payerId: "57d34859e63c5995587e8613", amount: 12, description: "Desc")
+        WithdrawalRequest().postWithdrawal(withdrawalToCreate, accountId: account.accountId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let withdrawalResponse = response as BaseResponse<Withdrawal>?
+                let message = withdrawalResponse?.message
+                let withdrawalCreated = withdrawalResponse?.object
+                print("\(message): \(withdrawalCreated)")
+                self.testPutWithdrawal(withdrawalCreated!)
+            }
+        })
+    }
+    
+    func testPutWithdrawal(withdrawal: Withdrawal) {
+        withdrawal.medium = .Rewards
+        WithdrawalRequest().putWithdrawal(withdrawal, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let withdrawalResponse = response as BaseResponse<Withdrawal>?
+                let message = withdrawalResponse?.message
+                print("\(message)")
+                self.testDeleteWithdrawal(withdrawal.withdrawalId)
+            }
+        })
+    }
+    
+    func testDeleteWithdrawal(withdrawalId: String) {
+        WithdrawalRequest().deleteWithdrawal(withdrawalId, completion:{(response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                let WithdrawalResponse = response as BaseResponse<Withdrawal>?
+                let message = WithdrawalResponse?.message
+                print("\(message)")
+            }
+        })
+    }
+}

@@ -50,6 +50,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func testWithdrawals(sender: AnyObject) {
-        
+        let _ = WithdrawalsTests()
     }
 }

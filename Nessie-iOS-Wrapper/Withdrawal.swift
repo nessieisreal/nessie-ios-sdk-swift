@@ -114,7 +114,7 @@ public class WithdrawalRequest {
     }
     
     // POST /accounts/{id}/withdrawals
-    public func postTransfer(newWithdrawal: Withdrawal, accountId: String, completion: (withdrawalResponse: BaseResponse<Withdrawal>?, error: NSError?) -> Void) {
+    public func postWithdrawal(newWithdrawal: Withdrawal, accountId: String, completion: (withdrawalResponse: BaseResponse<Withdrawal>?, error: NSError?) -> Void) {
         requestType = HTTPType.POST
         self.accountId = accountId
         
@@ -125,7 +125,7 @@ public class WithdrawalRequest {
         // required values: medium, amount
         var params: Dictionary<String, AnyObject> =
             ["medium": newWithdrawal.medium.rawValue,
-             "amount:": newWithdrawal.amount]
+             "amount": newWithdrawal.amount]
         
         // optional values
         let dateFormatter = NSDateFormatter()
@@ -168,7 +168,7 @@ public class WithdrawalRequest {
         
         var params: Dictionary<String, AnyObject> =
             ["medium": updatedWithdrawal.medium.rawValue,
-             "amount:": updatedWithdrawal.amount]
+             "amount": updatedWithdrawal.amount]
         
         if let description = updatedWithdrawal.description {
             params["description"] = description
