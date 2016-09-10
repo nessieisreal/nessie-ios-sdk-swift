@@ -48,33 +48,41 @@
                                     <action selector="testCustomers:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="cvQ-R3-nOv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z20-Cm-cG3">
-                                <frame key="frameInset" minX="157" minY="312" width="61" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z20-Cm-cG3">
                                 <state key="normal" title="Deposits"/>
                                 <connections>
                                     <action selector="testDeposits:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="l67-Y4-8l8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLS-fd-Gzv">
-                                <frame key="frameInset" minX="154" minY="368" width="64" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Purchase"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLS-fd-Gzv">
+                                <state key="normal" title="Purchases"/>
                                 <connections>
                                     <action selector="testPurchases:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="sgm-bO-uBY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgw-4t-fFJ">
+                                <state key="normal" title="Merchants"/>
+                                <connections>
+                                    <action selector="testMerchants:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="OAp-0t-b86"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3X2-eY-jzw" firstAttribute="top" secondItem="ZBS-wY-9QL" secondAttribute="bottom" constant="20" id="7Xa-RD-2XP"/>
+                            <constraint firstItem="HLS-fd-Gzv" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="EAO-vW-Xvd"/>
+                            <constraint firstItem="zgw-4t-fFJ" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="HIo-6y-ksc"/>
                             <constraint firstItem="qtn-qt-YTV" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="Ldg-GH-kyb"/>
                             <constraint firstItem="KwH-Bm-Pos" firstAttribute="top" secondItem="qtn-qt-YTV" secondAttribute="bottom" constant="22" id="NAS-Xh-HtH"/>
+                            <constraint firstItem="HLS-fd-Gzv" firstAttribute="top" secondItem="Z20-Cm-cG3" secondAttribute="bottom" constant="26" id="R1b-6A-1v4"/>
                             <constraint firstItem="KwH-Bm-Pos" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="XkP-v7-4My"/>
                             <constraint firstItem="3X2-eY-jzw" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="ZIc-eE-Yvv"/>
                             <constraint firstItem="2Ei-TP-IT2" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="b5D-BV-YOr"/>
+                            <constraint firstItem="zgw-4t-fFJ" firstAttribute="top" secondItem="HLS-fd-Gzv" secondAttribute="bottom" constant="25" id="bH9-N0-IyU"/>
                             <constraint firstItem="ZBS-wY-9QL" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="dl3-8q-Def"/>
+                            <constraint firstItem="Z20-Cm-cG3" firstAttribute="top" secondItem="KwH-Bm-Pos" secondAttribute="bottom" constant="23" id="hez-db-SDW"/>
                             <constraint firstItem="qtn-qt-YTV" firstAttribute="top" secondItem="3X2-eY-jzw" secondAttribute="bottom" constant="27" id="pAE-HZ-Xxk"/>
+                            <constraint firstItem="Z20-Cm-cG3" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="pI6-qg-kQo"/>
                             <constraint firstItem="ZBS-wY-9QL" firstAttribute="top" secondItem="2Ei-TP-IT2" secondAttribute="bottom" constant="20" id="uK5-sh-sKI"/>
                             <constraint firstItem="2Ei-TP-IT2" firstAttribute="top" secondItem="qrX-XH-8GV" secondAttribute="bottom" constant="30" id="yJZ-tm-eeI"/>
                         </constraints>
