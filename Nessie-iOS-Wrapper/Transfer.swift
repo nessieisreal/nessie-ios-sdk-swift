@@ -7,271 +7,228 @@
 //
 
 import Foundation
-public class TransferRequestBuilder {
-    public var requestType: HTTPType?
-    public var accountId: String!
-    public var payeeId: String!
-    
-    public var transferMedium: TransactionMedium?
-    public var amount: Int?
-    public var transferId: String!
+import SwiftyJSON
+
+public enum TransferType: String {
+    case P2P = "p2p"
+    case Deposit = "deposit"
+    case Withdrawal = "withdrawal"
+    case Unknown
+}
+
+public enum TransferStatus: String {
+    case Pending = "pending"
+    case Cancelled = "cancelled"
+    case Completed = "completed"
+    case Unknown
+}
+
+public class Transfer: JsonParser {
+    public var transferId: String
+    public var type: TransferType
+    public var transactionDate: NSDate?
+    public var status: TransferStatus
+    public var medium: TransactionMedium
+    public var payerId: String
+    public var payeeId: String
+    public var amount: Double
     public var description: String?
-    public var transferDate: String!
-    public var status: String!
+    
+    public init(transferId: String, type: TransferType, transactionDate: NSDate?, status: TransferStatus, medium: TransactionMedium, payerId: String, payeeId: String, amount: Double, description: String?) {
+        self.transferId = transferId
+        self.type = type
+        self.transactionDate = transactionDate
+        self.status = status
+        self.medium = medium
+        self.payerId = payerId
+        self.payeeId = payeeId
+        self.amount = amount
+        self.description = description
+    }
+    
+    public required init(data: JSON) {
+        self.transferId = data["_id"].string ?? ""
+        self.type = TransferType(rawValue: data["type"].string ?? "") ?? .Unknown
+        self.status = TransferStatus(rawValue: data["status"].string ?? "") ?? .Unknown
+        self.transactionDate = data["transaction_date"].string?.stringToDate()
+        self.medium = TransactionMedium(rawValue: data["medium"].string ?? "") ?? .Unknown
+        self.payerId = data["payer_id"].string ?? ""
+        self.payeeId = data["payee_id"].string ?? ""
+        self.amount = data["amount"].double ?? 0
+        self.description = data["description"].string ?? ""
+    }
+    
 }
 
 public class TransferRequest {
+    private var requestType: HTTPType!
+    private var accountId: String?
+    private var transferId: String?
     
-    private var request:  NSMutableURLRequest?
-    private var getsArray: Bool = true
-    private var builder: TransferRequestBuilder!
-    
-    public convenience init?(block: (TransferRequestBuilder -> Void)) {
-        let initializingBuilder = TransferRequestBuilder()
-        block(initializingBuilder)
-        self.init(builder: initializingBuilder)
+    public init () {
+        // not implemented
     }
-    
-    private init?(builder: TransferRequestBuilder)
-    {
-        self.builder = builder
-        
-        if (builder.transferId == nil && (builder.requestType == HTTPType.PUT || builder.requestType == HTTPType.DELETE)) {
-            NSLog("PUT/DELETE require a transferId")
-            return nil
-        }
-        
-        if ((builder.accountId == nil || builder.payeeId == nil || builder.transferMedium == nil || builder.amount == nil) && builder.requestType == HTTPType.POST) {
-            if (builder.accountId == nil) {
-                NSLog("POST requires accountId")
-            }
-            if (builder.transferMedium == nil) {
-                NSLog("POST requires transferMedium")
-            }
-            if (builder.amount == nil) {
-                NSLog("POST requires amount")
-            }
-            if (builder.payeeId == nil) {
-                NSLog("POST requires payeeId")
-            }
-            
-            return nil
-        }
-
-        if (builder.transferId == nil && builder.requestType == HTTPType.PUT) {
-            if (builder.transferId == nil) {
-                NSLog("PUT requires transferId")
-            }
-            
-            return nil
-        }
-
-        let requestString = buildRequestUrl()
-        print("\(requestString)\n", terminator: "")
-        buildRequest(requestString)
-        
-    }
-    
-    //Methods for building the request.
     
     private func buildRequestUrl() -> String {
-        var requestString = "\(baseString)"
+        // base URL
+        var requestString = "\(baseString)/transfers/"
         
-        if (builder.requestType == HTTPType.PUT) {
-            requestString += "/transfers/\(builder.transferId)?"
-            requestString += "key=\(NSEClient.sharedInstance.getKey())"
-            return requestString
-        }
-        
-        if (builder.requestType == HTTPType.DELETE) {
-            requestString += "/transfers/\(builder.transferId)?"
-            requestString += "key=\(NSEClient.sharedInstance.getKey())"
-            return requestString
+        // if a call uses accountId
+        if let accountId = accountId {
+            requestString = "\(baseString)/accounts/\(accountId)/transfers"
         }
         
-        if (builder.accountId != nil) {
-            requestString += "/accounts/\(builder.accountId!)/transfers"
+        // if a call uses transferId
+        if let transferId = transferId {
+            requestString += "\(transferId)"
         }
-        if (builder.transferId != nil) {
-            self.getsArray = false
-            requestString += "/transfers/\(builder.transferId!)"
-        }
+        
+        // append apiKey
         requestString += "?key=\(NSEClient.sharedInstance.getKey())"
+        
         return requestString
     }
     
-    private func buildRequest(url: String) -> NSMutableURLRequest {
-        self.request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        self.request!.HTTPMethod = builder.requestType!.rawValue
-        
-        addParamsToRequest();
-        
-        self.request!.setValue("application/json", forHTTPHeaderField: "content-type")
-        
-        return request!
+    private func setUp(reqType: HTTPType, accountId: String?, transferId: String?) {
+        self.requestType = reqType
+        self.accountId = accountId
+        self.transferId = transferId
     }
     
-    private func addParamsToRequest() {
-        var params:Dictionary<String, AnyObject> = [:]
-        var err: NSError?
-
-        if (builder.requestType == HTTPType.POST) {
-            params = ["medium":builder.transferMedium!.rawValue, "payee_id":builder.payeeId, "amount":builder.amount!]
-            if let description = builder.description {
-                params["description"] = description
-            }
-            if let date = builder.transferDate {
-                params["transaction_date"] = date
-            }
-            if let status = builder.status {
-                params["status"] = status
-            }
-            do {
-                self.request!.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
-            } catch let error as NSError {
-                err = error
-                self.request!.HTTPBody = nil
-            }
-            
-        }
-        if (builder.requestType == HTTPType.PUT) {
-            if let medium = builder.transferMedium {
-                params["medium"] = medium.rawValue
-            }
-            if let payeeId = builder.payeeId {
-                params["payee_id"] = payeeId
-            }
-            if let amount = builder.amount {
-                params["amount"] = amount
-            }
-            if let description = builder.description {
-                params["description"] = description
-            }
-            do {
-                self.request!.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
-            } catch let error as NSError {
-                err = error
-                self.request!.HTTPBody = nil
-            }
-        }
-    }
-    
-    
-    //Sending the request
-    public func send(completion completion: ((TransferResult) -> Void)?) {
+    // MARK: API Requests
+    // GET /accounts/{id}/transfers
+    public func getTransfersFromAccountId(accountId: String, completion: (transferArray: Array<Transfer>?, error: NSError?) -> Void) {
+        requestType = HTTPType.GET
+        self.accountId = accountId
         
-        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
-            if error != nil {
-                NSLog(error!.description)
-                return
-            }
-            if (completion == nil) {
-                return
-            }
-            
-            let result = TransferResult(data: data!)
-            completion!(result)
-            
-        }).resume()
-    }
-}
-
-
-public struct TransferResult {
-    private var dataItem:Transfer?
-    private var dataArray:Array<Transfer>?
-    internal init(data:NSData) {
-        var parseError: NSError?
-        if let parsedObject = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? Array<Dictionary<String,AnyObject>> {
-            
-            dataArray = []
-            dataItem = nil
-            for transfer in parsedObject {
-                dataArray?.append(Transfer(data: transfer))
-            }
-        }
-        if let parsedObject = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? Dictionary<String,AnyObject> {
-            dataArray = nil
-            
-            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
-                dataArray = []
-                dataItem = nil
-                for transfer in results {
-                    dataArray?.append(Transfer(data: transfer as! Dictionary<String, AnyObject>))
-                }
-                return
-            }
-            
-            //If there is an error message, the json will parse to a dictionary, not an array
-            if let message:AnyObject = parsedObject["message"] {
-                NSLog(message.description!)
-                if let reason:AnyObject = parsedObject["culprit"] {
-                    NSLog("Reasons:\(reason.description)")
-                    return
-                } else {
-                    return
-                }
-            }
-            
-            if let message:AnyObject = parsedObject["message"] {
-                
-            }
-            
-            dataItem = Transfer(data: parsedObject)
-        }
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         
-        if (dataItem == nil && dataArray == nil) {
-            let datastring = NSString(data: data, encoding: NSUTF8StringEncoding)
-            if (data.description == "<>") {
-                NSLog("Transfer delete Successful")
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(transferArray: nil, error: error)
             } else {
-                NSLog("Could not parse data: \(datastring)")
+                let json = JSON(data: data!)
+                let response = BaseResponse<Transfer>(data: json)
+                completion(transferArray: response.requestArray, error: nil)
             }
-        }
+        })
     }
     
-    public func getTransfer() -> Transfer? {
-        if (dataItem == nil) {
-            NSLog("No single data item found. If you were intending to get multiple items, try getAllTransfers()");
-        }
-        return dataItem
-    }
-    
-    public func getAllTransfers() -> Array<Transfer>? {
-        if (dataArray == nil) {
-            NSLog("No array of data items found. If you were intending to get one single item, try getTransfer()");
-        }
-        return dataArray
-    }
-}
-
-public class Transfer {
-    public let status:String!
-    public let medium:TransactionMedium!
-    public let payeeId:String!
-    public let payerId:String!
-    public let amount:Int!
-    public let type:String!
-    public var transactionDate:NSDate!
-    public let description:String!
-    public let transferId:String!
-    
-    internal init(data:Dictionary<String,AnyObject>) {
-        self.status = data["status"] as? String
-        self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
-        self.payeeId = data["payee_id"] as? String
-        self.payerId = data["payer_id"] as? String
-        self.amount = data["amount"] as! Int
-        self.type = data["type"] as! String
-        let transactionDateString = data["transaction_date"] as? String
-        if let str = transactionDateString {
-            if let date = dateFormatter.dateFromString(str) {
-                self.transactionDate = date }
-            else {
-                self.transactionDate = NSDate()
+    // GET /transfers/{transferId}
+    public func getTransfer(transferId: String, completion: (transfer: Transfer?, error: NSError?) -> Void) {
+        requestType = HTTPType.GET
+        self.transferId = transferId
+        
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
+        
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(transfer: nil, error: error)
+            } else {
+                let json = JSON(data: data!)
+                let response = BaseResponse<Transfer>(data: json)
+                completion(transfer: response.object, error: nil)
             }
-        }
-        self.description = data["description"] as! String
-        self.transferId = data["_id"] as! String
+        })
     }
+    
+    // POST /accounts/{id}/transfers
+    public func postTransfer(newTransfer: Transfer, accountId: String, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+        requestType = HTTPType.POST
+        self.accountId = accountId
+        
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
+        
+        // construct request body
+        // required values: medium, payee_id, amount
+        var params: Dictionary<String, AnyObject> =
+            ["medium": newTransfer.medium.rawValue,
+             "payee_id": newTransfer.payeeId,
+             "amount:": newTransfer.amount]
+        
+        // optional values
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-dd-MM"
+        if let transactionDate = newTransfer.transactionDate as NSDate? {
+            let dateString = dateFormatter.stringFromDate(transactionDate)
+            params["transaction_date"] = dateString
+        }
+        
+        if let description = newTransfer.description {
+            params["description"] = description
+        }
+        
+        // make request
+        do {
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+        } catch let error as NSError {
+            request.HTTPBody = nil
+            completion(transferResponse: nil, error: error)
+        }
+        
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(transferResponse: nil, error: error)
+            } else {
+                let json = JSON(data: data!)
+                let response = BaseResponse<Transfer>(data: json)
+                completion(transferResponse: response, error: nil)
+            }
+        })
+    }
+    
+    // PUT /transfers/{transferId}
+    public func putTransfer(updatedTransfer: Transfer, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+        requestType = HTTPType.PUT
+        transferId = updatedTransfer.transferId
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
+        
+        var params: Dictionary<String, AnyObject> =
+            ["medium": updatedTransfer.medium.rawValue,
+             "payee_id": updatedTransfer.payeeId,
+             "amount:": updatedTransfer.amount]
+        
+        if let description = updatedTransfer.description {
+            params["description"] = description
+        }
+        
+        do {
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+        } catch let error as NSError {
+            request.HTTPBody = nil
+            completion(transferResponse: nil, error: error)
+        }
+        
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(transferResponse: nil, error: error)
+            } else {
+                let json = JSON(data: data!)
+                let response = BaseResponse<Transfer>(data: json)
+                completion(transferResponse: response, error: nil)
+            }
+        })
+    }
+    
+    // DELETE /transfers/{transferId}
+    public func deleteTransfer(transferId: String, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+        requestType = HTTPType.DELETE
+        self.transferId = transferId
+        
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(transferResponse: nil, error: error)
+            } else {
+                let response = BaseResponse<Transfer>(requestArray: nil, object: nil, message: "Transfer deleted")
+                completion(transferResponse: response, error: nil)
+            }
+        })
+    }
+    
 }
