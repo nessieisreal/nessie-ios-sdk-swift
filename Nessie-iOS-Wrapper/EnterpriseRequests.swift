@@ -50,24 +50,7 @@ public class EnterpriseTransferRequest {
         
         return request!
     }
-    //Sending the request
     
-    public func send(completion: ((TransferResult) -> Void)?) {
-        
-        NSURLSession.sharedSession().dataTaskWithRequest(request!, completionHandler:{(data, response, error) -> Void in
-            if error != nil {
-                NSLog(error!.description)
-                return
-            }
-            if (completion == nil) {
-                return
-            }
-            
-            let result = TransferResult(data: data!)
-            completion!(result)
-            
-        }).resume()
-    }
 }
 
 
