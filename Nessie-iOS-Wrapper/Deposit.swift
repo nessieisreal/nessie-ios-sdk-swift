@@ -46,18 +46,11 @@ public class Deposit: JsonParser {
         self.depositId = data["_id"].string ?? ""
         self.status = BillStatus(rawValue: data["status"].string ?? "") ?? .Unknown
         self.medium = TransactionMedium(rawValue: data["medium"].string ?? "") ?? .Unknown
-        self.payeeId = data["payee_id"].string
+        self.payeeId = data["payee_id"].string ?? ""
         self.amount = data["amount"].int ?? 0
         self.type = data["type"].string ?? ""
-        let transactionDateString = data["transaction_date"].string
-        if let str = transactionDateString {
-            if let date = dateFormatter.dateFromString(str) {
-                self.transactionDate = date
-            } else {
-                self.transactionDate = NSDate()
-            }
-        }
-        self.description = data["description"].string
+        self.transactionDate = data["transaction_date"].string?.stringToDate()
+        self.description = data["description"].string ?? ""
         self.depositId = data["_id"].string ?? ""
     }
 }
