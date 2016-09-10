@@ -153,3 +153,13 @@ public class BaseResponse<T:JsonParser> {
 public protocol JsonParser {
     init (data: JSON)
 }
+
+extension String {
+    func stringToDate() -> NSDate? {
+        if let date = dateFormatter.dateFromString(self) {
+            return date
+        } else {
+            return NSDate()
+        }
+    }
+}
