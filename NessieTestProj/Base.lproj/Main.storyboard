@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VFo-UJ-Rl2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VFo-UJ-Rl2">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -78,6 +78,14 @@
                                     <action selector="testWithdrawals:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="RXU-qV-h6o"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otN-0E-e28">
+                                <frame key="frameInset" minX="116" minY="534" width="139" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Enterprise Accounts"/>
+                                <connections>
+                                    <action selector="testEnterpriseAccounts:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="GVC-Uh-Pmz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -100,7 +108,7 @@
                             <constraint firstItem="Z20-Cm-cG3" firstAttribute="centerX" secondItem="E9D-XB-SO3" secondAttribute="centerX" id="pI6-qg-kQo"/>
                             <constraint firstItem="ZBS-wY-9QL" firstAttribute="top" secondItem="2Ei-TP-IT2" secondAttribute="bottom" constant="20" id="uK5-sh-sKI"/>
                             <constraint firstItem="cUn-bh-em2" firstAttribute="top" secondItem="zgw-4t-fFJ" secondAttribute="bottom" constant="22" id="uy1-72-nrb"/>
-                            <constraint firstItem="2Ei-TP-IT2" firstAttribute="top" secondItem="qrX-XH-8GV" secondAttribute="bottom" constant="30" id="yJZ-tm-eeI"/>
+                            <constraint firstItem="2Ei-TP-IT2" firstAttribute="top" secondItem="qrX-XH-8GV" secondAttribute="bottom" id="yJZ-tm-eeI"/>
                         </constraints>
                     </view>
                 </viewController>

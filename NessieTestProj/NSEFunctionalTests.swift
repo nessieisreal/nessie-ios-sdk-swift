@@ -840,3 +840,48 @@ class WithdrawalsTests {
         })
     }
 }
+
+class EnterpriseAccountTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetAccounts()
+    }
+    
+    func testGetAccounts() {
+    let request = EnterpriseAccountRequest()
+        request.getAccounts(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Account>? {
+                    if array.count > 0 {
+                        let account = array[0] as Account?
+                        self.testGetAccount(account!.accountId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+
+    func testGetAccount(accountId: String) {
+        var request = EnterpriseAccountRequest()
+        request.getAccount(accountId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Account? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}

@@ -17,6 +17,7 @@ public enum HTTPType: String {
 }
 
 internal let baseString = "http://api.reimaginebanking.com"
+internal let baseEnterpriseString = "\(baseString)/enterprise/"
 internal var dateFormatter = NSDateFormatter()
 internal let genericError = NSError(domain:"com.nessie", code:0, userInfo:[NSLocalizedDescriptionKey : "Error", NSLocalizedFailureReasonErrorKey : "No description"])
 
@@ -136,6 +137,8 @@ public class BaseResponse<T:JsonParser> {
     internal init(data: JSON) {
         if (data["data"].null == nil) {
             self.requestArray = data["data"].arrayValue.map({T(data:$0)})
+        } else if (data["results"].null == nil) {
+            self.requestArray = data["results"].arrayValue.map({T(data:$0)})
         } else {
             self.requestArray = data.arrayValue.map({T(data:$0)})
         }
