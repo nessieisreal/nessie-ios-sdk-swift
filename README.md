@@ -7,8 +7,8 @@ Capital One Nessie API SDK written in Swift, using SwiftyJSON for JSON parsing. 
 1. Download the entire SDK directory.
 2. Open the `Nessie-iOS-Wrapper.xcworkspace` file.
 3. Start working by either:
-  * Creating your work in a new Project Target.
-  * Adding your files directly into the `Nessie-iOS-Wrapper`. See `NessieTestProj` for examples.
+  * Creating a new Project Target and add your work there.
+  * Adding your files directly into the `Nessie-iOS-Wrapper` target. See `NessieTestProj` for examples.
 
 ##Usage and Examples
 ####Important Note
@@ -21,9 +21,6 @@ In the `getAccounts()` call, `accountType` is optional. If you wish to get all a
             ...
         )}
 ```
-
-
-
 
 ####Creating a Customer
 ```Swift
@@ -76,6 +73,4 @@ In the `getAccounts()` call, `accountType` is optional. If you wish to get all a
     }
 ```
 
-
 You can find examples [here](https://github.com/nessieisreal/nessie-ios-sdk-swift/blob/master/NessieTestProj/NSEFunctionalTests.swift).
-
