@@ -2,8 +2,8 @@
 //  EnterpriseRequests.swift
 //  Nessie-iOS-Wrapper
 //
-//  Created by Mecklenburg, William on 5/19/15.
-//  Copyright (c) 2015 Nessie. All rights reserved.
+//  Created by Lopez Vargas, Victor R. on 9/15/16.
+//  Copyright (c) 2016 Nessie. All rights reserved.
 //
 
 import Foundation
