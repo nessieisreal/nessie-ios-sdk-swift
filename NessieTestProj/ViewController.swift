@@ -56,4 +56,8 @@ class ViewController: UIViewController {
     @IBAction func testEnterpriseAccounts(sender: AnyObject) {
         let _ = EnterpriseAccountTests()
     }
+    
+    @IBAction func testEnterpriseBills(sender: AnyObject) {
+        let _ = EnterpriseBillTests()
+    }
 }

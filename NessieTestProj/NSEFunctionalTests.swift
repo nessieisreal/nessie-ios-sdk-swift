@@ -885,3 +885,48 @@ class EnterpriseAccountTests {
         }
     }
 }
+
+class EnterpriseBillTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetBills()
+    }
+    
+    func testGetBills() {
+        let request = EnterpriseBillRequest()
+        request.getBills(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Bill>? {
+                    if array.count > 0 {
+                        let bill = array[0] as Bill?
+                        self.testGetBill(bill!.billId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetBill(billId: String) {
+        var request = EnterpriseBillRequest()
+        request.getBill(billId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Bill? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}

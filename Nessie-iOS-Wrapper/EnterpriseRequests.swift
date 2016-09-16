@@ -66,3 +66,44 @@ public struct EnterpriseAccountRequest: Enterprise {
         })
     }
 }
+
+public struct EnterpriseBillRequest: Enterprise {
+    var id: String? = nil
+    var urlName: String = "bills"
+    
+    public init () {}
+    
+    public func getBills(completion:(billsArray: Array<Bill>?, error: NSError?) -> Void) {
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(billsArray: nil, error: error)
+            } else {
+                guard let data = data else {
+                    completion(billsArray: nil, error: genericError)
+                    return
+                }
+                let json = JSON(data: data)
+                let response = BaseResponse<Bill>(data: json)
+                completion(billsArray: response.requestArray, error: nil)
+            }
+        })
+    }
+    
+    public mutating func getBill(bilId: String, completion: (customer: Bill?, error: NSError?) -> Void) {
+        self.id = bilId
+        
+        let nseClient = NSEClient.sharedInstance
+        let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
+        nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
+            if (error != nil) {
+                completion(customer: nil, error: error)
+            } else {
+                let json = JSON(data: data!)
+                let response = BaseResponse<Bill>(data: json)
+                completion(customer: response.object, error: nil)
+            }
+        })
+    }
+}

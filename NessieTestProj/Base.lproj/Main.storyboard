@@ -30,6 +30,14 @@
                                     <action selector="testAccountsCalls:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="MgU-RH-VpP"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otN-0E-e28">
+                                <frame key="frameInset" minX="118" minY="544" width="139" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Enterprise Accounts"/>
+                                <connections>
+                                    <action selector="testEnterpriseAccounts:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="GVC-Uh-Pmz"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3X2-eY-jzw">
                                 <state key="normal" title="Bills"/>
                                 <connections>
@@ -78,12 +86,12 @@
                                     <action selector="testWithdrawals:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="RXU-qV-h6o"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otN-0E-e28">
-                                <frame key="frameInset" minX="116" minY="534" width="139" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ru0-jh-bb2">
+                                <frame key="frameInset" minX="137" minY="582" width="103" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Enterprise Accounts"/>
+                                <state key="normal" title="Enterprise Bills"/>
                                 <connections>
-                                    <action selector="testEnterpriseAccounts:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="GVC-Uh-Pmz"/>
+                                    <action selector="testEnterpriseBills:" destination="VFo-UJ-Rl2" eventType="touchUpInside" id="UtE-cb-iok"/>
                                 </connections>
                             </button>
                         </subviews>
