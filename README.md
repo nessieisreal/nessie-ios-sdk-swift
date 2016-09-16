@@ -6,7 +6,8 @@ Capital One Nessie API SDK written in Swift, using SwiftyJSON for JSON parsing. 
 ##Installation
 1. Download the entire SDK directory.
 2. Open the `Nessie-iOS-Wrapper.xcworkspace` file.
-3. Start working by either:
+3. Set your API Key in `NSEClient.swift` where `private var key = ""`
+4. Start working by either:
   * Creating a new Project Target and add your work there.
   * Adding your files directly into the `Nessie-iOS-Wrapper` target. See `NessieTestProj` for examples.
 
