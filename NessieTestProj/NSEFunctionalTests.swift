@@ -930,3 +930,228 @@ class EnterpriseBillTests {
         }
     }
 }
+
+class EnterpriseCustomerTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetCustomers()
+    }
+    
+    func testGetCustomers() {
+        let request = EnterpriseCustomerRequest()
+        request.getCustomers(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Customer>? {
+                    if array.count > 0 {
+                        let customer = array[0] as Customer?
+                        self.testGetCustomer(customer!.customerId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetCustomer(customerId: String) {
+        var request = EnterpriseCustomerRequest()
+        request.getCustomer(customerId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Customer? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}
+
+class EnterpriseDepositTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetDeposits()
+    }
+    
+    func testGetDeposits() {
+        let request = EnterpriseDepositRequest()
+        request.getDeposits(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Deposit>? {
+                    if array.count > 0 {
+                        let deposit = array[0] as Deposit?
+                        self.testGetDeposit(deposit!.depositId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetDeposit(depositId: String) {
+        var request = EnterpriseDepositRequest()
+        request.getDeposit(depositId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Deposit? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}
+
+class EnterpriseMerchantTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetMerchants()
+    }
+    
+    func testGetMerchants() {
+        let request = EnterpriseMerchantRequest()
+        request.getMerchants(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Merchant>? {
+                    if array.count > 0 {
+                        let merchant = array[0] as Merchant?
+                        self.testGetMerchant(merchant!.merchantId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetMerchant(merchantId: String) {
+        var request = EnterpriseMerchantRequest()
+        request.getMerchant(merchantId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Merchant? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}
+
+class EnterpriseTransferTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetTransfers()
+    }
+    
+    func testGetTransfers() {
+        let request = EnterpriseTransferRequest()
+        request.getTransfers(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Transfer>? {
+                    if array.count > 0 {
+                        let transfer = array[0] as Transfer?
+                        self.testGetTransfer(transfer!.transferId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetTransfer(transferId: String) {
+        var request = EnterpriseTransferRequest()
+        request.getTransfer(transferId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Transfer? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}
+
+class EnterpriseWithdrawalTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        self.testGetWithdrawals()
+    }
+    
+    func testGetWithdrawals() {
+        let request = EnterpriseWithdrawalRequest()
+        request.getWithdrawals(){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if let array = response as Array<Withdrawal>? {
+                    if array.count > 0 {
+                        let withdrawal = array[0] as Withdrawal?
+                        self.testGetWithdrawal(withdrawal!.withdrawalId)
+                        print(array)
+                    } else {
+                        print("No accounts found")
+                    }
+                }
+            }
+        }
+    }
+    
+    func testGetWithdrawal(withdrawalId: String) {
+        var request = EnterpriseWithdrawalRequest()
+        request.getWithdrawal(withdrawalId){ (response, error) in
+            if (error != nil) {
+                print(error)
+            } else {
+                if (error != nil) {
+                    print(error)
+                } else {
+                    if let account = response as Withdrawal? {
+                        print(account)
+                    }
+                }
+            }
+        }
+    }
+}

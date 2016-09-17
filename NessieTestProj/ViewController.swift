@@ -13,51 +13,44 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    @IBAction func testAccountsCalls(sender: AnyObject) {
+    @IBAction func testAccountsRequests(sender: AnyObject) {
         let _ = AccountTests()
     }
     
-    @IBAction func testAtmCalls(sender: AnyObject) {
+    @IBAction func testAtmRequests(sender: AnyObject) {
         let _ = ATMTests()
     }
     
-    @IBAction func testBill(sender: AnyObject) {
+    @IBAction func testBillRequests(sender: AnyObject) {
         let _ = BillTests()
     }
     
-    @IBAction func testBranches(sender: AnyObject) {
+    @IBAction func testBranchesRequests(sender: AnyObject) {
         let _ = BranchTests()
     }
     
-    @IBAction func testCustomers(sender: AnyObject) {
+    @IBAction func testCustomersRequests(sender: AnyObject) {
         let _ = CustomerTests()
     }
 
-    @IBAction func testDeposits(sender: AnyObject) {
+    @IBAction func testDepositsRequests(sender: AnyObject) {
         let _ = DepositsTests()
     }
     
-    @IBAction func testPurchases(sender: AnyObject) {
+    @IBAction func testPurchasesRequests(sender: AnyObject) {
         let _ = PurchasesTests()
     }
     
-    @IBAction func testMerchants(sender: AnyObject) {
+    @IBAction func testMerchantsRequests(sender: UIButton) {
         let _ = MerchantTests()
     }
     
-    @IBAction func testTransfers(sender: AnyObject) {
+    @IBAction func testTransfersRequests(sender: AnyObject) {
         let _ = TransfersTests()
     }
     
-    @IBAction func testWithdrawals(sender: AnyObject) {
+    @IBAction func testWithdrawalsRequests(sender: UIButton) {
         let _ = WithdrawalsTests()
     }
     
-    @IBAction func testEnterpriseAccounts(sender: AnyObject) {
-        let _ = EnterpriseAccountTests()
-    }
-    
-    @IBAction func testEnterpriseBills(sender: AnyObject) {
-        let _ = EnterpriseBillTests()
-    }
 }

@@ -10,6 +10,8 @@
 		5B4B74E61BB98A0600197534 /* NessieFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; };
 		5B4B74E71BB98A0600197534 /* NessieFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BB790541B9670A800488749 /* Merchant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB790531B9670A800488749 /* Merchant.swift */; };
+		5BF0FEA01D8C675700223ED4 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0FE9F1D8C675700223ED4 /* TabViewController.swift */; };
+		5BF0FEA21D8C676900223ED4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0FEA11D8C676900223ED4 /* SecondViewController.swift */; };
 		5BF9F35C1B98A902000D2D4D /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9F35B1B98A902000D2D4D /* Transfer.swift */; };
 		5BF9F35E1B98A90E000D2D4D /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9F35D1B98A90E000D2D4D /* Purchase.swift */; };
 		B81D5BC31B0A87470086B2C6 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81D5BC21B0A87470086B2C6 /* Customer.swift */; };
@@ -81,6 +83,8 @@
 		57C2E31B0FA56AC94DDD7A50 /* Pods-Nessie-iOS-Wrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nessie-iOS-Wrapper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nessie-iOS-Wrapper/Pods-Nessie-iOS-Wrapper.release.xcconfig"; sourceTree = "<group>"; };
 		5B4FB38B5F365A889DDFFCAD /* Pods-NessieTestProj.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NessieTestProj.release.xcconfig"; path = "Pods/Target Support Files/Pods-NessieTestProj/Pods-NessieTestProj.release.xcconfig"; sourceTree = "<group>"; };
 		5BB790531B9670A800488749 /* Merchant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merchant.swift; sourceTree = "<group>"; };
+		5BF0FE9F1D8C675700223ED4 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		5BF0FEA11D8C676900223ED4 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		5BF9F35B1B98A902000D2D4D /* Transfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		5BF9F35D1B98A90E000D2D4D /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 		8BE40FF841192D654BF4C793 /* Pods_NessieTestProj.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NessieTestProj.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,11 +169,13 @@
 			children = (
 				B834EB121AE5BB5000379E11 /* AppDelegate.swift */,
 				B834EB141AE5BB5000379E11 /* ViewController.swift */,
+				5BF0FEA11D8C676900223ED4 /* SecondViewController.swift */,
+				5BF0FE9F1D8C675700223ED4 /* TabViewController.swift */,
+				B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */,
 				B834EB161AE5BB5000379E11 /* Main.storyboard */,
 				B834EB191AE5BB5000379E11 /* Images.xcassets */,
 				B834EB1B1AE5BB5000379E11 /* LaunchScreen.xib */,
 				B834EB101AE5BB5000379E11 /* Supporting Files */,
-				B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */,
 			);
 			path = NessieTestProj;
 			sourceTree = "<group>";
@@ -540,8 +546,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BF0FEA01D8C675700223ED4 /* TabViewController.swift in Sources */,
 				B834EB151AE5BB5000379E11 /* ViewController.swift in Sources */,
 				B834EB131AE5BB5000379E11 /* AppDelegate.swift in Sources */,
+				5BF0FEA21D8C676900223ED4 /* SecondViewController.swift in Sources */,
 				B86E4A7F1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
