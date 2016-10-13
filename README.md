@@ -1,5 +1,7 @@
 # Nessie-iOS-Wrapper
 
+### Note: This SDK is Swift 2.3 and not compatible with Swift 3.0 yet. We're currently working on a 3.0 version but please write your project in Swift 2.3 in the mean time!
+
 ##Synopsis
 Capital One Nessie API SDK written in Swift, using SwiftyJSON for JSON parsing. This SDK can be easily embedded in an iOS project.
 
