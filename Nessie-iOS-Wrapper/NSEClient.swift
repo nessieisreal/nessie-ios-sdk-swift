@@ -18,50 +18,39 @@ public enum HTTPType: String {
 
 internal let baseString = "http://api.reimaginebanking.com"
 internal let baseEnterpriseString = "\(baseString)/enterprise/"
-internal var dateFormatter = NSDateFormatter()
+internal var dateFormatter = DateFormatter()
 internal let genericError = NSError(domain:"com.nessie", code:0, userInfo:[NSLocalizedDescriptionKey : "Error", NSLocalizedFailureReasonErrorKey : "No description"])
 
-public class NSEClient {
+open class NSEClient {
     
-    public class var sharedInstance: NSEClient {
-        struct Static {
-            static var instance: NSEClient?
-            static var token: dispatch_once_t = 0
-        }
-        
-        dispatch_once(&Static.token) {
-            Static.instance = NSEClient()
-        }
-        
-        return Static.instance!
-    }
+    open static var sharedInstance = NSEClient()
     
-    private var key = ""
+    fileprivate var key = ""
     
-    public func getKey() -> String {
+    open func getKey() -> String {
         if key == "" {
-            NSLog("Attempting to get unset key. Don't forget to set the key before sending requests!")
+            print("Attempting to get unset key. Don't forget to set the key before sending requests!")
         }
         return key;
     }
     
-    public func setKey(key:String) {
+    open func setKey(_ key:String) {
         self.key = key
     }
     
-    private init() {
+    fileprivate init() {
         dateFormatter.dateFormat = "yyyy-dd-MM"
     }
     
-    public func buildRequest(requestType: HTTPType, url: String) -> NSMutableURLRequest {
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        request.HTTPMethod = requestType.rawValue
+    open func buildRequest(_ requestType: HTTPType, url: String) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        request.httpMethod = requestType.rawValue
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         
         return request
     }
     
-    public func makeRequest(requestUrl: String, requestType: HTTPType) -> NSMutableURLRequest {
+    open func makeRequest(_ requestUrl: String, requestType: HTTPType) -> NSMutableURLRequest {
         let requestString = requestUrl
         let nseClient = NSEClient.sharedInstance
         
@@ -69,26 +58,26 @@ public class NSEClient {
         return request
     }
     
-    public func loadDataFromURL(request: NSMutableURLRequest, completion:(data: NSData?, error: NSError?) -> Void) {
-        let session = NSURLSession.sharedSession()
+    open func loadDataFromURL(_ request: NSMutableURLRequest, completion:@escaping (_ data: Data?, _ error: NSError?) -> Void) {
+        let session = URLSession.shared
         
         // Use NSURLSession to get data from an NSURL
-        let loadDataTask = session.dataTaskWithRequest(request, completionHandler:{(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            if let responseError = error {
-                completion(data: nil, error: responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+        let loadDataTask = session.dataTask(with: request as URLRequest) { data, response, error in
+            if let responseError = error as? NSError {
+                completion(nil, responseError)
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if (200 ... 299 ~= httpResponse.statusCode) {
-                    completion(data: data, error: nil)
+                    completion(data, nil)
                 } else {
                     let json = JSON(data: data!)
                     let errorMessage = json["message"].string ?? "Something went wrong. Check your connection."
                     let culprit = json["culprit"].array
                     let culpritMessage: String = culprit?.first?.rawString() ?? "Unknown reason"
                     let statusError = NSError(domain:"com.nessie", code:httpResponse.statusCode, userInfo:[NSLocalizedDescriptionKey : errorMessage, NSLocalizedFailureReasonErrorKey : culpritMessage])
-                    completion(data: nil, error: statusError)
+                    completion(nil, statusError)
                 }
             }
-        })
+        }
         
         loadDataTask.resume()
     }
@@ -96,9 +85,9 @@ public class NSEClient {
     
 //**********//
     // In progress
-    class func invokeService<T:Initable> (service: String, withParams params: Dictionary<String, String>, returningClass: T.Type, completionHandler handler: ((Initable) -> ())) {
+    class func invokeService<T:Initable> (_ service: String, withParams params: Dictionary<String, String>, returningClass: T.Type, completionHandler handler: @escaping ((Initable) -> ())) {
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "asd")!)
+        let request = NSMutableURLRequest(url: URL(string: "asd")!)
         NSEClient.sharedInstance.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
                 return
@@ -114,11 +103,11 @@ protocol Initable {
     init(data:JSON)
 }
 
-public class BaseClass: Initable {
+open class BaseClass: Initable {
     
-    public let previuosPage: String
-    public let nextPage: String
-    public let requestArray: Array<AnyObject>
+    open let previuosPage: String
+    open let nextPage: String
+    open let requestArray: Array<AnyObject>
     
     required public init(data:JSON) {
         self.requestArray = data["data"].arrayValue.map({Atm(data:$0)})
@@ -128,11 +117,11 @@ public class BaseClass: Initable {
 }
 //**********//
 
-public class BaseResponse<T:JsonParser> {
+open class BaseResponse<T:JsonParser> {
     
-    public var requestArray: Array<T>?
-    public var object: T?
-    public var message: String?
+    open var requestArray: Array<T>?
+    open var object: T?
+    open var message: String?
     
     internal init(data: JSON) {
         if (data["data"].null == nil) {
@@ -162,11 +151,11 @@ public protocol JsonParser {
 }
 
 extension String {
-    func stringToDate() -> NSDate? {
-        if let date = dateFormatter.dateFromString(self) {
+    func stringToDate() -> Date? {
+        if let date = dateFormatter.date(from: self) {
             return date
         } else {
-            return NSDate()
+            return Date()
         }
     }
 }

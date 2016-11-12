@@ -9,18 +9,18 @@
 import Foundation
 import SwiftyJSON
 
-public class Purchase: JsonParser {
-    public var merchantId: String
-    public let status: BillStatus
-    public var medium: TransactionMedium
-    public let payerId: String?
-    public var amount: Double
-    public let type: String?
-    public var purchaseDate: NSDate?
-    public var description: String?
-    public let purchaseId: String
+open class Purchase: JsonParser {
+    open var merchantId: String
+    open let status: BillStatus
+    open var medium: TransactionMedium
+    open let payerId: String?
+    open var amount: Double
+    open let type: String?
+    open var purchaseDate: Date?
+    open var description: String?
+    open let purchaseId: String
     
-    public init(merchantId: String, status: BillStatus, medium: TransactionMedium, payerId: String?, amount: Double, type: String, purchaseDate: NSDate?, description: String?, purchaseId: String) {
+    public init(merchantId: String, status: BillStatus, medium: TransactionMedium, payerId: String?, amount: Double, type: String, purchaseDate: Date?, description: String?, purchaseId: String) {
         self.merchantId = merchantId
         self.status = status
         self.medium = medium
@@ -41,10 +41,10 @@ public class Purchase: JsonParser {
         self.type = data["type"].string ?? ""
         let transactionDateString = data["purchase_date"].string
         if let str = transactionDateString {
-            if let date = dateFormatter.dateFromString(str) {
+            if let date = dateFormatter.date(from: str) {
                 self.purchaseDate = date
             } else {
-                self.purchaseDate = NSDate()
+                self.purchaseDate = Date() as Date
             }
         }
         self.description = data["description"].string
@@ -52,15 +52,15 @@ public class Purchase: JsonParser {
     }
 }
 
-public class PurchaseRequest {
-    private var requestType: HTTPType!
-    private var accountId: String?
-    private var purchaseId: String?
-    private var merchantId: String?
+open class PurchaseRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var accountId: String?
+    fileprivate var purchaseId: String?
+    fileprivate var merchantId: String?
     
     public init () {}
     
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         
         var requestString = "\(baseString)/purchases/"
         
@@ -86,7 +86,7 @@ public class PurchaseRequest {
     }
     
     // APIs
-    public func getPurchase(purchaseId: String, completion: (purchase: Purchase?, error: NSError?) -> Void) {
+    open func getPurchase(_ purchaseId: String, completion: @escaping (_ purchase: Purchase?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.purchaseId = purchaseId
         
@@ -94,16 +94,16 @@ public class PurchaseRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchase: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchase: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
-    public func getPurchasesFromMerchantId(merchantId: String, completion: (purchaseArrays: Array<Purchase>?, error: NSError?) -> Void) {
+    open func getPurchasesFromMerchantId(_ merchantId: String, completion: @escaping (_ purchaseArrays: Array<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.merchantId = merchantId
         
@@ -111,16 +111,16 @@ public class PurchaseRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchaseArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getPurchasesFromAccountId(accountId: String, completion: (purchaseArrays: Array<Purchase>?, error: NSError?) -> Void) {
+    open func getPurchasesFromAccountId(_ accountId: String, completion: @escaping (_ purchaseArrays: Array<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -128,16 +128,16 @@ public class PurchaseRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchaseArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getPurchasesFromMerchantAndAccountIds(merchantId: String, accountId: String, completion: (purchaseArrays: Array<Purchase>?, error: NSError?) -> Void) {
+    open func getPurchasesFromMerchantAndAccountIds(_ merchantId: String, accountId: String, completion: @escaping (_ purchaseArrays: Array<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.merchantId = merchantId
         self.accountId = accountId
@@ -146,84 +146,84 @@ public class PurchaseRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchaseArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func postPurchase(newPurchase: Purchase, accountId: String, completion: (purchaseResponse: BaseResponse<Purchase>?, error: NSError?) -> Void) {
+    open func postPurchase(_ newPurchase: Purchase, accountId: String, completion: @escaping (_ purchaseResponse: BaseResponse<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.POST
         self.accountId = accountId
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
-        var params: Dictionary<String, AnyObject> = ["medium": newPurchase.medium.rawValue,
-                                                     "merchant_id": newPurchase.merchantId,
-                                                     "amount": newPurchase.amount]
+        var params: Dictionary<String, AnyObject> = ["medium": newPurchase.medium.rawValue as AnyObject,
+                                                     "merchant_id": newPurchase.merchantId as AnyObject,
+                                                     "amount": newPurchase.amount as AnyObject]
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-dd-MM"
-        if let purchaseDate = newPurchase.purchaseDate as NSDate? {
-            let dateString = dateFormatter.stringFromDate(purchaseDate)
-            params["purchase_date"] = dateString
+        if let purchaseDate = newPurchase.purchaseDate as Date? {
+            let dateString = dateFormatter.string(from: purchaseDate)
+            params["purchase_date"] = dateString as AnyObject?
         }
         
         if let description = newPurchase.description {
-            params["description"] = description
+            params["description"] = description as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(purchaseResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchaseResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func putPurchase(updatedPurchase: Purchase, completion: (purchaseResponse: BaseResponse<Purchase>?, error: NSError?) -> Void) {
+    open func putPurchase(_ updatedPurchase: Purchase, completion: @escaping (_ purchaseResponse: BaseResponse<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.PUT
         purchaseId = updatedPurchase.purchaseId
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         
-        var params: Dictionary<String, AnyObject> = ["medium": updatedPurchase.medium.rawValue,
-                                                     "amount": updatedPurchase.amount]
+        var params: Dictionary<String, AnyObject> = ["medium": updatedPurchase.medium.rawValue as AnyObject,
+                                                     "amount": updatedPurchase.amount as AnyObject]
         if let description = updatedPurchase.description {
-            params["description"] = description
+            params["description"] = description as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(purchaseResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Purchase>(data: json)
-                completion(purchaseResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func deletePurchase(purchaseId: String, completion: (purchaseResponse: BaseResponse<Purchase>?, error: NSError?) -> Void) {
+    open func deletePurchase(_ purchaseId: String, completion: @escaping (_ purchaseResponse: BaseResponse<Purchase>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.DELETE
         self.purchaseId = purchaseId
         
@@ -231,10 +231,10 @@ public class PurchaseRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(purchaseResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let response = BaseResponse<Purchase>(requestArray: nil, object: nil, message: "Purchase deleted")
-                completion(purchaseResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }

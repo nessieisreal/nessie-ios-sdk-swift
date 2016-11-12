@@ -9,14 +9,14 @@
 import Foundation
 import SwiftyJSON
 
-public class Branch: JsonParser {
-    public let branchId: String
-    public let name: String
-    public let phoneNumber: String
-    public let hours: Array<String>
-    public let notes: Array<String>
-    public let address: Address
-    public let geocode: Geocode
+open class Branch: JsonParser {
+    open let branchId: String
+    open let name: String
+    open let phoneNumber: String
+    open let hours: Array<String>
+    open let notes: Array<String>
+    open let address: Address
+    open let geocode: Geocode
     
     public required init(data: JSON) {
         self.branchId = data["_id"].string ?? ""
@@ -29,13 +29,13 @@ public class Branch: JsonParser {
     }
 }
 
-public class BranchRequest {
-    private var requestType: HTTPType = .GET
-    private var branchId: String?
+open class BranchRequest {
+    fileprivate var requestType: HTTPType = .GET
+    fileprivate var branchId: String?
 
     public init () {}
 
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         
         var requestString = "\(baseString)/branches"
         if (branchId != nil) {
@@ -47,35 +47,35 @@ public class BranchRequest {
     }
     
     // APIs
-    public func getBranches(completion:(branchesArray: Array<Branch>?, error: NSError?) -> Void) {
+    open func getBranches(_ completion:@escaping (_ branchesArray: Array<Branch>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(branchesArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(branchesArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Branch>(data: json)
-                completion(branchesArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getBranch(branchId: String, completion: (branch: Branch?, error: NSError?) -> Void) {
+    open func getBranch(_ branchId: String, completion: @escaping (_ branch: Branch?, _ error: NSError?) -> Void) {
         self.branchId = branchId
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(branch: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Branch>(data: json)
-                completion(branch: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }

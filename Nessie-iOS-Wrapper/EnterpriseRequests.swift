@@ -32,36 +32,36 @@ public struct EnterpriseAccountRequest: Enterprise {
     
     public init () {}
     
-    public func getAccounts(completion:(accountsArray: Array<Account>?, error: NSError?) -> Void) {
+    public func getAccounts(_ completion:@escaping (_ accountsArray: Array<Account>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountsArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(accountsArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Account>(data: json)
-                completion(accountsArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getAccount(accountId: String, completion: (customer: Account?, error: NSError?) -> Void) {
+    public mutating func getAccount(_ accountId: String, completion: @escaping (_ customer: Account?, _ error: NSError?) -> Void) {
         self.id = accountId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Account>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -73,36 +73,36 @@ public struct EnterpriseBillRequest: Enterprise {
     
     public init () {}
     
-    public func getBills(completion:(billsArray: Array<Bill>?, error: NSError?) -> Void) {
+    public func getBills(_ completion:@escaping (_ billsArray: Array<Bill>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billsArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(billsArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Bill>(data: json)
-                completion(billsArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getBill(bilId: String, completion: (customer: Bill?, error: NSError?) -> Void) {
+    public mutating func getBill(_ bilId: String, completion: @escaping (_ customer: Bill?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -114,36 +114,36 @@ public struct EnterpriseCustomerRequest: Enterprise {
     
     public init () {}
     
-    public func getCustomers(completion:(customersArray: Array<Customer>?, error: NSError?) -> Void) {
+    public func getCustomers(_ completion:@escaping (_ customersArray: Array<Customer>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customersArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(customersArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customersArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getCustomer(bilId: String, completion: (customer: Customer?, error: NSError?) -> Void) {
+    public mutating func getCustomer(_ bilId: String, completion: @escaping (_ customer: Customer?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -155,36 +155,36 @@ public struct EnterpriseDepositRequest: Enterprise {
     
     public init () {}
     
-    public func getDeposits(completion:(depositsArray: Array<Deposit>?, error: NSError?) -> Void) {
+    public func getDeposits(_ completion:@escaping (_ depositsArray: Array<Deposit>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(depositsArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(depositsArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Deposit>(data: json)
-                completion(depositsArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getDeposit(bilId: String, completion: (customer: Deposit?, error: NSError?) -> Void) {
+    public mutating func getDeposit(_ bilId: String, completion: @escaping (_ customer: Deposit?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Deposit>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -196,36 +196,36 @@ public struct EnterpriseMerchantRequest: Enterprise {
     
     public init () {}
     
-    public func getMerchants(completion:(merchantsArray: Array<Merchant>?, error: NSError?) -> Void) {
+    public func getMerchants(_ completion:@escaping (_ merchantsArray: Array<Merchant>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(merchantsArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(merchantsArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(merchantsArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getMerchant(bilId: String, completion: (customer: Merchant?, error: NSError?) -> Void) {
+    public mutating func getMerchant(_ bilId: String, completion: @escaping (_ customer: Merchant?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -237,36 +237,36 @@ public struct EnterpriseTransferRequest: Enterprise {
     
     public init () {}
     
-    public func getTransfers(completion:(transfersArray: Array<Transfer>?, error: NSError?) -> Void) {
+    public func getTransfers(_ completion:@escaping (_ transfersArray: Array<Transfer>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transfersArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(transfersArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(transfersArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getTransfer(bilId: String, completion: (customer: Transfer?, error: NSError?) -> Void) {
+    public mutating func getTransfer(_ bilId: String, completion: @escaping (_ customer: Transfer?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
@@ -278,36 +278,36 @@ public struct EnterpriseWithdrawalRequest: Enterprise {
     
     public init () {}
     
-    public func getWithdrawals(completion:(withdrawalsArray: Array<Withdrawal>?, error: NSError?) -> Void) {
+    public func getWithdrawals(_ completion:@escaping (_ withdrawalsArray: Array<Withdrawal>?, _ error: NSError?) -> Void) {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(withdrawalsArray: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(withdrawalsArray: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Withdrawal>(data: json)
-                completion(withdrawalsArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public mutating func getWithdrawal(bilId: String, completion: (customer: Withdrawal?, error: NSError?) -> Void) {
+    public mutating func getWithdrawal(_ bilId: String, completion: @escaping (_ customer: Withdrawal?, _ error: NSError?) -> Void) {
         self.id = bilId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: .GET)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Withdrawal>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }

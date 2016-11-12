@@ -9,13 +9,13 @@
 import Foundation
 import SwiftyJSON
 
-public class Merchant: JsonParser {
+open class Merchant: JsonParser {
     
-    public let merchantId: String
-    public var name: String
-    public var category: Array<String>
-    public var address: Address
-    public var geocode: Geocode
+    open let merchantId: String
+    open var name: String
+    open var category: Array<String>
+    open var address: Address
+    open var geocode: Geocode
     
     public init(merchantId: String, name: String, category: Array<String>, address: Address, geocode: Geocode) {
         self.merchantId = merchantId
@@ -34,15 +34,15 @@ public class Merchant: JsonParser {
     }
 }
 
-public class MerchantRequest {
-    private var requestType: HTTPType!
-    private var merchantId: String?
-    private var rad: String?
-    private var geocode: Geocode?
+open class MerchantRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var merchantId: String?
+    fileprivate var rad: String?
+    fileprivate var geocode: Geocode?
     
     public init () {}
     
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         
         var requestString = "\(baseString)/merchants"
         if let merchantId = merchantId {
@@ -59,7 +59,7 @@ public class MerchantRequest {
     }
     
     // APIs
-    public func getMerchants(geocode: Geocode? = nil, rad: String? = nil, completion:(merchantsArrays: Array<Merchant>?, error: NSError?) -> Void) {
+    open func getMerchants(_ geocode: Geocode? = nil, rad: String? = nil, completion:@escaping (_ merchantsArrays: Array<Merchant>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.geocode = geocode
         self.rad = rad
@@ -68,20 +68,20 @@ public class MerchantRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(merchantsArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(merchantsArrays: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(merchantsArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getMerchant(merchantId: String, completion: (merchant: Merchant?, error: NSError?) -> Void) {
+    open func getMerchant(_ merchantId: String, completion: @escaping (_ merchant: Merchant?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.merchantId = merchantId
         
@@ -89,16 +89,16 @@ public class MerchantRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(merchant: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(merchant: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
-    public func postMerchant(newMerchant: Merchant, completion: (merchantResponse: BaseResponse<Merchant>?, error: NSError?) -> Void) {
+    open func postMerchant(_ newMerchant: Merchant, completion: @escaping (_ merchantResponse: BaseResponse<Merchant>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.POST
         
         let nseClient = NSEClient.sharedInstance
@@ -112,30 +112,30 @@ public class MerchantRequest {
         let geocode = ["lng": newMerchant.geocode.lng,
                        "lat": newMerchant.geocode.lat]
         
-        let params: Dictionary<String, AnyObject> = ["name": newMerchant.name,
-                                                     "category": newMerchant.category,
-                                                     "geocode": geocode,
-                                                     "address": address]
+        let params: Dictionary<String, AnyObject> = ["name": newMerchant.name as AnyObject,
+                                                     "category": newMerchant.category as AnyObject,
+                                                     "geocode": geocode as AnyObject,
+                                                     "address": address as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(merchantResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(merchantResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(merchantResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func putMerchant(updatedMerchant: Merchant, completion: (merchantResponse: BaseResponse<Merchant>?, error: NSError?) -> Void) {
+    open func putMerchant(_ updatedMerchant: Merchant, completion: @escaping (_ merchantResponse: BaseResponse<Merchant>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.PUT
         merchantId = updatedMerchant.merchantId
         
@@ -150,25 +150,25 @@ public class MerchantRequest {
         let geocode = ["lng": updatedMerchant.geocode.lng,
                        "lat": updatedMerchant.geocode.lat]
         
-        let params: Dictionary<String, AnyObject> = ["name": updatedMerchant.name,
-                                                     "category": updatedMerchant.category,
-                                                     "geocode": geocode,
-                                                     "address": address]
+        let params: Dictionary<String, AnyObject> = ["name": updatedMerchant.name as AnyObject,
+                                                     "category": updatedMerchant.category as AnyObject,
+                                                     "geocode": geocode as AnyObject,
+                                                     "address": address as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(merchantResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(merchantResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Merchant>(data: json)
-                completion(merchantResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }

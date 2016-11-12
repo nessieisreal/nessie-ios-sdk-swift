@@ -23,18 +23,18 @@ public enum TransferStatus: String {
     case Unknown
 }
 
-public class Transfer: JsonParser {
-    public var transferId: String
-    public var type: TransferType
-    public var transactionDate: NSDate?
-    public var status: TransferStatus
-    public var medium: TransactionMedium
-    public var payerId: String
-    public var payeeId: String
-    public var amount: Double
-    public var description: String?
+open class Transfer: JsonParser {
+    open var transferId: String
+    open var type: TransferType
+    open var transactionDate: Date?
+    open var status: TransferStatus
+    open var medium: TransactionMedium
+    open var payerId: String
+    open var payeeId: String
+    open var amount: Double
+    open var description: String?
     
-    public init(transferId: String, type: TransferType, transactionDate: NSDate?, status: TransferStatus, medium: TransactionMedium, payerId: String, payeeId: String, amount: Double, description: String?) {
+    public init(transferId: String, type: TransferType, transactionDate: Date?, status: TransferStatus, medium: TransactionMedium, payerId: String, payeeId: String, amount: Double, description: String?) {
         self.transferId = transferId
         self.type = type
         self.transactionDate = transactionDate
@@ -60,16 +60,16 @@ public class Transfer: JsonParser {
     
 }
 
-public class TransferRequest {
-    private var requestType: HTTPType!
-    private var accountId: String?
-    private var transferId: String?
+open class TransferRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var accountId: String?
+    fileprivate var transferId: String?
     
     public init () {
         // not implemented
     }
     
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         // base URL
         var requestString = "\(baseString)/transfers/"
         
@@ -89,7 +89,7 @@ public class TransferRequest {
         return requestString
     }
     
-    private func setUp(reqType: HTTPType, accountId: String?, transferId: String?) {
+    fileprivate func setUp(_ reqType: HTTPType, accountId: String?, transferId: String?) {
         self.requestType = reqType
         self.accountId = accountId
         self.transferId = transferId
@@ -98,7 +98,7 @@ public class TransferRequest {
     // MARK: API Requests
     
     // GET /accounts/{id}/transfers
-    public func getTransfersFromAccountId(accountId: String, completion: (transferArray: Array<Transfer>?, error: NSError?) -> Void) {
+    open func getTransfersFromAccountId(_ accountId: String, completion: @escaping (_ transferArray: Array<Transfer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -107,17 +107,17 @@ public class TransferRequest {
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transferArray: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(transferArray: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
     // GET /transfers/{transferId}
-    public func getTransfer(transferId: String, completion: (transfer: Transfer?, error: NSError?) -> Void) {
+    open func getTransfer(_ transferId: String, completion: @escaping (_ transfer: Transfer?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.transferId = transferId
         
@@ -126,17 +126,17 @@ public class TransferRequest {
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transfer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(transfer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
     // POST /accounts/{id}/transfers
-    public func postTransfer(newTransfer: Transfer, accountId: String, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+    open func postTransfer(_ newTransfer: Transfer, accountId: String, completion: @escaping (_ transferResponse: BaseResponse<Transfer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.POST
         self.accountId = accountId
         
@@ -146,43 +146,43 @@ public class TransferRequest {
         // construct request body
         // required values: medium, payee_id, amount
         var params: Dictionary<String, AnyObject> =
-            ["medium": newTransfer.medium.rawValue,
-             "payee_id": newTransfer.payeeId,
-             "amount": newTransfer.amount]
+            ["medium": newTransfer.medium.rawValue as AnyObject,
+             "payee_id": newTransfer.payeeId as AnyObject,
+             "amount": newTransfer.amount as AnyObject]
         
         // optional values
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-dd-MM"
-        if let transactionDate = newTransfer.transactionDate as NSDate? {
-            let dateString = dateFormatter.stringFromDate(transactionDate)
-            params["transaction_date"] = dateString
+        if let transactionDate = newTransfer.transactionDate as Date? {
+            let dateString = dateFormatter.string(from: transactionDate)
+            params["transaction_date"] = dateString as AnyObject?
         }
         
         if let description = newTransfer.description {
-            params["description"] = description
+            params["description"] = description as AnyObject?
         }
         
         // make request
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(transferResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transferResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(transferResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
     // PUT /transfers/{transferId}
-    public func putTransfer(updatedTransfer: Transfer, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+    open func putTransfer(_ updatedTransfer: Transfer, completion: @escaping (_ transferResponse: BaseResponse<Transfer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.PUT
         transferId = updatedTransfer.transferId
         
@@ -190,34 +190,34 @@ public class TransferRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         
         var params: Dictionary<String, AnyObject> =
-            ["medium": updatedTransfer.medium.rawValue,
-             "payee_id": updatedTransfer.payeeId,
-             "amount": updatedTransfer.amount]
+            ["medium": updatedTransfer.medium.rawValue as AnyObject,
+             "payee_id": updatedTransfer.payeeId as AnyObject,
+             "amount": updatedTransfer.amount as AnyObject]
         
         if let description = updatedTransfer.description {
-            params["description"] = description
+            params["description"] = description as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(transferResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transferResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Transfer>(data: json)
-                completion(transferResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
     // DELETE /transfers/{transferId}
-    public func deleteTransfer(transferId: String, completion: (transferResponse: BaseResponse<Transfer>?, error: NSError?) -> Void) {
+    open func deleteTransfer(_ transferId: String, completion: @escaping (_ transferResponse: BaseResponse<Transfer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.DELETE
         self.transferId = transferId
         
@@ -225,10 +225,10 @@ public class TransferRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(transferResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let response = BaseResponse<Transfer>(requestArray: nil, object: nil, message: "Transfer deleted")
-                completion(transferResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
