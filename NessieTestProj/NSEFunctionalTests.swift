@@ -23,12 +23,12 @@ class AccountTests {
         
         AccountRequest().getAccounts(accountType, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Account>? {
                     if array.count > 0 {
                         let account = array[0] as Account?
-                        self.testGetAccount(account!.accountId)
+                        self.testGetAccount(accountId: account!.accountId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -41,11 +41,11 @@ class AccountTests {
     func testGetAccount(accountId: String) {
         AccountRequest().getAccount(accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let account = response as Account? {
                     print(account)
-                    self.testGetCustomerAccounts(account.customerId)
+                    self.testGetCustomerAccounts(customerId: account.customerId)
                 }
             }
         })
@@ -54,14 +54,14 @@ class AccountTests {
     func testGetCustomerAccounts(customerId: String) {
         AccountRequest().getCustomerAccounts(customerId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Account>? {
                     print(array)
                     let account = array[0] as Account?
-                    self.testPostAccount(account!.customerId)
-                    self.testPutAccount(account!.accountId, nickname: "New nickname", accountNumber: "0987654321123456")
-                    self.testDeleteAccount(account!.accountId)
+                    self.testPostAccount(customerId: account!.customerId)
+                    self.testPutAccount(accountId: account!.accountId, nickname: "New nickname", accountNumber: "0987654321123456")
+                    self.testDeleteAccount(accountId: account!.accountId)
                 }
             }
         })
@@ -72,7 +72,7 @@ class AccountTests {
         let accountToCreate = Account(accountId: "", accountType:accountType, nickname: "Hola", rewards: 10, balance: 100, accountNumber: "1234567890123456", customerId: customerId)
         AccountRequest().postAccount(accountToCreate, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let accountResponse = response as BaseResponse<Account>?
                 let message = accountResponse?.message
@@ -85,7 +85,7 @@ class AccountTests {
     func testPutAccount(accountId: String, nickname: String, accountNumber: String?) {
         AccountRequest().putAccount(accountId, nickname: nickname, accountNumber: accountNumber, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let accountResponse = response as BaseResponse<Account>?
                 let message = accountResponse?.message
@@ -98,7 +98,7 @@ class AccountTests {
     func testDeleteAccount(accountId: String) {
         AccountRequest().deleteAccount(accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let accountResponse = response as BaseResponse<Account>?
                 if let message = accountResponse?.message {
@@ -125,12 +125,12 @@ class ATMTests {
         
         ATMRequest().getAtms(latitude, longitude: longitude, radius: radius, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let array = response as AtmResponse?
                 print(array!.requestArray)
                 
-                self.testGetNextAtms(array!.nextPage)
+                self.testGetNextAtms(nextString: array!.nextPage)
             }
         })
     }
@@ -138,12 +138,12 @@ class ATMTests {
     func testGetNextAtms(nextString: String) {
         ATMRequest().getNextAtms(nextString, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let array = response as AtmResponse?
                 print(array!.requestArray)
                 
-                self.testGetPreviousAtms(array!.previousPage)
+                self.testGetPreviousAtms(previousString: array!.previousPage)
             }
         })
     }
@@ -151,7 +151,7 @@ class ATMTests {
     func testGetPreviousAtms(previousString: String) {
         ATMRequest().getPreviousAtms(previousString, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let array = response as AtmResponse?
                 print(array!.requestArray)
@@ -176,13 +176,13 @@ class BillTests {
     func testGetAllBills() {
         BillRequest().getAccountBills(accountToAccess.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Bill>? {
                     if array.count > 0 {
-                        let bill = array[0] as Bill!
+                        let bill = array[0]
                         print(array)
-                        self.testGetBill(bill.billId)
+                        self.testGetBill(billId: bill.billId)
                     } else {
                         print("No accounts found")
                     }
@@ -194,7 +194,7 @@ class BillTests {
     func testGetBill(billId: String) {
         BillRequest().getBill(billId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let bill = response as Bill? {
                     print(bill)
@@ -207,7 +207,7 @@ class BillTests {
     func testGetCustomerBills() {
         BillRequest().getCustomerBills(accountToAccess.customerId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Bill>? {
                     if array.count > 0 {
@@ -222,16 +222,16 @@ class BillTests {
     }
     
     func testPostBill() {
-        let billToCreate = Bill(status: .Pending, payee: "Victor", nickname: "Nickname", creationDate: NSDate(), paymentDate: nil, recurringDate: 1, upcomingPaymentDate: NSDate(), paymentAmount: 123, accountId: accountToAccess.accountId)
+        let billToCreate = Bill(status: .Pending, payee: "Victor", nickname: "Nickname", creationDate: Date(), paymentDate: nil, recurringDate: 1, upcomingPaymentDate: Date(), paymentAmount: 123, accountId: accountToAccess.accountId)
         BillRequest().postBill(billToCreate, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let billResponse = response as BaseResponse<Bill>?
                 let message = billResponse?.message
                 let billCreated = billResponse?.object
                 print("\(message): \(billCreated)")
-                self.testPutBill(billCreated!)
+                self.testPutBill(bill: billCreated!)
             }
         })
     }
@@ -240,12 +240,12 @@ class BillTests {
         bill.payee = "Raul"
         BillRequest().putBill(bill, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let billResponse = response as BaseResponse<Bill>?
                 let message = billResponse?.message
                 print("\(message)")
-                self.testDeleteBill(bill.billId)
+                self.testDeleteBill(billId: bill.billId)
             }
         })
     }
@@ -253,7 +253,7 @@ class BillTests {
     func testDeleteBill(billId: String) {
         BillRequest().deleteBill(billId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let billResponse = response as BaseResponse<Bill>?
                 let message = billResponse?.message
@@ -274,12 +274,12 @@ class BranchTests {
     func testGetBranches() {
         BranchRequest().getBranches({(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Branch>? {
                     if array.count > 0 {
                         let branch = array[0] as Branch?
-                        self.testGetBranch(branch!.branchId)
+                        self.testGetBranch(branchId: branch!.branchId)
                         print(array)
                     } else {
                         print("No branches found")
@@ -292,7 +292,7 @@ class BranchTests {
     func testGetBranch(branchId: String) {
         BranchRequest().getBranch(branchId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let branch = response as Branch? {
                     print(branch)
@@ -313,12 +313,12 @@ class CustomerTests {
     func testGetCustomers() {
         CustomerRequest().getCustomers({(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Customer>? {
                     if array.count > 0 {
                         let customer = array[0] as Customer?
-                        self.testGetCustomer(customer!.customerId)
+                        self.testGetCustomer(customerId: customer!.customerId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -331,7 +331,7 @@ class CustomerTests {
     func testGetCustomer(customerId: String) {
         CustomerRequest().getCustomer(customerId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let customer = response as Customer? {
                     print(customer)
@@ -344,7 +344,7 @@ class CustomerTests {
     func testGetCustomers(from accountId: String) {
         CustomerRequest().getCustomer(accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let customer = response as Customer? {
                     print(customer)
@@ -359,13 +359,13 @@ class CustomerTests {
         let customerToCreate = Customer(firstName: "Victor", lastName: "Lopez", address: address, customerId: "asd")
         CustomerRequest().postCustomer(customerToCreate, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let customerResponse = response as BaseResponse<Customer>?
                 let message = customerResponse?.message
                 let customerCreated = customerResponse?.object
                 print("\(message): \(customerCreated)")
-                self.testPutCustomer(customerCreated!)
+                self.testPutCustomer(customerToBeModified: customerCreated!)
             }
         })
     }
@@ -374,7 +374,7 @@ class CustomerTests {
         customerToBeModified.firstName = "Raul"
         CustomerRequest().putCustomer(customerToBeModified, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let accountResponse = response as BaseResponse<Customer>?
                 let message = accountResponse?.message
@@ -396,10 +396,10 @@ class DepositsTests {
     
     var account: Account = Account(accountId: "57d213d71fd43e204dd4841e", accountType:.CreditCard, nickname: "Hola", rewards: 10, balance: 100, accountNumber: "1234567890123456", customerId: "57d0c20d1fd43e204dd48282")
     
-    func testGetDeposit(DepositId: String) {
-        DepositRequest().getDeposit(DepositId, completion:{(response, error) in
+    func testGetDeposit(depositId: String) {
+        DepositRequest().getDeposit(depositId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let deposit = response as Deposit? {
                     print(deposit)
@@ -412,13 +412,13 @@ class DepositsTests {
     func testGetAllDepositsFromAccount() {
         DepositRequest().getDepositsFromAccountId(account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Deposit>? {
                     if array.count > 0 {
-                        let deposit = array[0] as Deposit!
+                        let deposit = array[0]
                         print(array)
-                        self.testGetDeposit(deposit.depositId)
+                        self.testGetDeposit(depositId: deposit.depositId)
                     } else {
                         print("No deposits found")
                     }
@@ -428,16 +428,16 @@ class DepositsTests {
     }
     
     func testPostDeposit() {
-        let depositToCreate = Deposit(depositId: "", status: .Pending, medium: .Balance, payeeId: "asd", amount: 1, type: "merchant", transactionDate: NSDate(), description: "Description")
+        let depositToCreate = Deposit(depositId: "", status: .Pending, medium: .Balance, payeeId: "asd", amount: 1, type: "merchant", transactionDate: Date(), description: "Description")
         DepositRequest().postDeposit(depositToCreate, accountId: account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let depositResponse = response as BaseResponse<Deposit>?
                 let message = depositResponse?.message
                 let depositCreated = depositResponse?.object
                 print("\(message): \(depositCreated)")
-                self.testPutDeposit(depositCreated!)
+                self.testPutDeposit(deposit: depositCreated!)
             }
         })
     }
@@ -446,12 +446,12 @@ class DepositsTests {
         deposit.medium = .Rewards
         DepositRequest().putDeposit(deposit, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let depositResponse = response as BaseResponse<Deposit>?
                 let message = depositResponse?.message
                 print("\(message)")
-                self.testDeleteDeposit(deposit.depositId)
+                self.testDeleteDeposit(depositId: deposit.depositId)
             }
         })
     }
@@ -459,7 +459,7 @@ class DepositsTests {
     func testDeleteDeposit(depositId: String) {
         DepositRequest().deleteDeposit(depositId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let DepositResponse = response as BaseResponse<Deposit>?
                 let message = DepositResponse?.message
@@ -498,7 +498,7 @@ class PurchasesTests {
     func testGetPurchase(PurchaseId: String) {
         PurchaseRequest().getPurchase(PurchaseId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let purchase = response as Purchase? {
                     print(purchase)
@@ -511,7 +511,7 @@ class PurchasesTests {
     func testGetAllPurchasesFromMerchant() {
         PurchaseRequest().getPurchasesFromMerchantId(merchant.merchantId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Purchase>? {
                     if array.count > 0 {
@@ -528,13 +528,13 @@ class PurchasesTests {
     func testGetAllPurchasesFromAccount() {
         PurchaseRequest().getPurchasesFromAccountId(account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Purchase>? {
                     if array.count > 0 {
-                        let purchase = array[0] as Purchase!
+                        let purchase = array[0]
                         print(array)
-                        self.testGetPurchase(purchase.purchaseId)
+                        self.testGetPurchase(PurchaseId: purchase.purchaseId)
                     } else {
                         print("No purchases found")
                     }
@@ -546,7 +546,7 @@ class PurchasesTests {
     func testGetAllPurchasesFromMerchantAndAccount() {
         PurchaseRequest().getPurchasesFromMerchantAndAccountIds(merchant.merchantId, accountId: account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Purchase>? {
                     if array.count > 0 {
@@ -560,16 +560,16 @@ class PurchasesTests {
     }
 
     func testPostPurchase() {
-        let purchaseToCreate = Purchase(merchantId: "57cf75cea73e494d8675ec49", status: .Cancelled, medium: .Balance, payerId: account.accountId, amount: 4.5, type: "merchant", purchaseDate: NSDate(), description: "Description", purchaseId: "asd")
+        let purchaseToCreate = Purchase(merchantId: "57cf75cea73e494d8675ec49", status: .Cancelled, medium: .Balance, payerId: account.accountId, amount: 4.5, type: "merchant", purchaseDate: Date(), description: "Description", purchaseId: "asd")
         PurchaseRequest().postPurchase(purchaseToCreate, accountId: account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let purchaseResponse = response as BaseResponse<Purchase>?
                 let message = purchaseResponse?.message
                 let purchaseCreated = purchaseResponse?.object
                 print("\(message): \(purchaseCreated)")
-                self.testPutPurchase(purchaseCreated!)
+                self.testPutPurchase(purchase: purchaseCreated!)
             }
         })
     }
@@ -578,12 +578,12 @@ class PurchasesTests {
         purchase.medium = .Rewards
         PurchaseRequest().putPurchase(purchase, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let purchaseResponse = response as BaseResponse<Purchase>?
                 let message = purchaseResponse?.message
                 print("\(message)")
-                self.testDeletePurchase(purchase.purchaseId)
+                self.testDeletePurchase(purchaseId: purchase.purchaseId)
             }
         })
     }
@@ -591,7 +591,7 @@ class PurchasesTests {
     func testDeletePurchase(purchaseId: String) {
         PurchaseRequest().deletePurchase(purchaseId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let PurchaseResponse = response as BaseResponse<Purchase>?
                 let message = PurchaseResponse?.message
@@ -613,12 +613,12 @@ class MerchantTests {
     func testGetMerchants() {
         MerchantRequest().getMerchants(completion: {(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Merchant>? {
                     if array.count > 0 {
                         let merchant = array[0] as Merchant?
-                        self.testGetMerchant(merchant!.merchantId)
+                        self.testGetMerchant(merchantId: merchant!.merchantId)
                         print(array)
                     } else {
                         print("No merchants found")
@@ -631,7 +631,7 @@ class MerchantTests {
     func testGetMerchant(merchantId: String) {
         MerchantRequest().getMerchant(merchantId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let merchant = response as Merchant? {
                     print(merchant)
@@ -647,13 +647,13 @@ class MerchantTests {
         let merchantToCreate = Merchant(merchantId: "", name: "Name", category: ["Cateogry"], address: address, geocode: geocode)
         MerchantRequest().postMerchant(merchantToCreate, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let merchantResponse = response as BaseResponse<Merchant>?
                 let message = merchantResponse?.message
                 let merchantCreated = merchantResponse?.object
                 print("\(message): \(merchantCreated)")
-                self.testPutMerchant(merchantCreated!)
+                self.testPutMerchant(merchantToBeModified: merchantCreated!)
             }
         })
     }
@@ -662,7 +662,7 @@ class MerchantTests {
         merchantToBeModified.name = "Raul"
         MerchantRequest().putMerchant(merchantToBeModified, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let accountResponse = response as BaseResponse<Merchant>?
                 let message = accountResponse?.message
@@ -687,7 +687,7 @@ class TransfersTests {
     func testGetTransfer(TransferId: String) {
         TransferRequest().getTransfer(TransferId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let transfer = response as Transfer? {
                     print(transfer)
@@ -700,13 +700,13 @@ class TransfersTests {
     func testGetAllTransfersFromAccount() {
         TransferRequest().getTransfersFromAccountId(account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Transfer>? {
                     if array.count > 0 {
-                        let transfer = array[0] as Transfer!
+                        let transfer = array[0]
                         print(array)
-                        self.testGetTransfer(transfer.transferId)
+                        self.testGetTransfer(TransferId: transfer.transferId)
                     } else {
                         print("No transfers found")
                     }
@@ -716,16 +716,16 @@ class TransfersTests {
     }
     
     func testPostTransfer() {
-        let transferToCreate = Transfer(transferId: "", type: .Deposit, transactionDate: NSDate(), status: .Pending, medium: .Balance, payerId: "57d34859e63c5995587e8613", payeeId: "57d359e7e63c5995587e8620", amount: 12, description: "Desc")
+        let transferToCreate = Transfer(transferId: "", type: .Deposit, transactionDate: Date(), status: .Pending, medium: .Balance, payerId: "57d34859e63c5995587e8613", payeeId: "57d359e7e63c5995587e8620", amount: 12, description: "Desc")
         TransferRequest().postTransfer(transferToCreate, accountId: account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let transferResponse = response as BaseResponse<Transfer>?
                 let message = transferResponse?.message
                 let transferCreated = transferResponse?.object
                 print("\(message): \(transferCreated)")
-                self.testPutTransfer(transferCreated!)
+                self.testPutTransfer(transfer: transferCreated!)
             }
         })
     }
@@ -734,12 +734,12 @@ class TransfersTests {
         transfer.medium = .Rewards
         TransferRequest().putTransfer(transfer, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let transferResponse = response as BaseResponse<Transfer>?
                 let message = transferResponse?.message
                 print("\(message)")
-                self.testDeleteTransfer(transfer.transferId)
+                self.testDeleteTransfer(transferId: transfer.transferId)
             }
         })
     }
@@ -747,7 +747,7 @@ class TransfersTests {
     func testDeleteTransfer(transferId: String) {
         TransferRequest().deleteTransfer(transferId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let TransferResponse = response as BaseResponse<Transfer>?
                 let message = TransferResponse?.message
@@ -771,7 +771,7 @@ class WithdrawalsTests {
     func testGetWithdrawal(WithdrawalId: String) {
         WithdrawalRequest().getWithdrawal(WithdrawalId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let withdrawal = response as Withdrawal? {
                     print(withdrawal)
@@ -784,13 +784,13 @@ class WithdrawalsTests {
     func testGetAllWithdrawalsFromAccount() {
         WithdrawalRequest().getWithdrawalsFromAccountId(account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Withdrawal>? {
                     if array.count > 0 {
-                        let withdrawal = array[0] as Withdrawal!
+                        let withdrawal = array[0]
                         print(array)
-                        self.testGetWithdrawal(withdrawal.withdrawalId)
+                        self.testGetWithdrawal(WithdrawalId: withdrawal.withdrawalId)
                     } else {
                         print("No withdrawals found")
                     }
@@ -800,16 +800,16 @@ class WithdrawalsTests {
     }
     
     func testPostWithdrawal() {
-        let withdrawalToCreate = Withdrawal(withdrawalId: "", type: .Deposit, transactionDate: NSDate(), status: .Cancelled, medium: .Balance, payerId: "57d34859e63c5995587e8613", amount: 12, description: "Desc")
+        let withdrawalToCreate = Withdrawal(withdrawalId: "", type: .Deposit, transactionDate: Date(), status: .Cancelled, medium: .Balance, payerId: "57d34859e63c5995587e8613", amount: 12, description: "Desc")
         WithdrawalRequest().postWithdrawal(withdrawalToCreate, accountId: account.accountId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let withdrawalResponse = response as BaseResponse<Withdrawal>?
                 let message = withdrawalResponse?.message
                 let withdrawalCreated = withdrawalResponse?.object
                 print("\(message): \(withdrawalCreated)")
-                self.testPutWithdrawal(withdrawalCreated!)
+                self.testPutWithdrawal(withdrawal: withdrawalCreated!)
             }
         })
     }
@@ -818,12 +818,12 @@ class WithdrawalsTests {
         withdrawal.medium = .Rewards
         WithdrawalRequest().putWithdrawal(withdrawal, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let withdrawalResponse = response as BaseResponse<Withdrawal>?
                 let message = withdrawalResponse?.message
                 print("\(message)")
-                self.testDeleteWithdrawal(withdrawal.withdrawalId)
+                self.testDeleteWithdrawal(withdrawalId: withdrawal.withdrawalId)
             }
         })
     }
@@ -831,7 +831,7 @@ class WithdrawalsTests {
     func testDeleteWithdrawal(withdrawalId: String) {
         WithdrawalRequest().deleteWithdrawal(withdrawalId, completion:{(response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 let WithdrawalResponse = response as BaseResponse<Withdrawal>?
                 let message = WithdrawalResponse?.message
@@ -853,12 +853,12 @@ class EnterpriseAccountTests {
     let request = EnterpriseAccountRequest()
         request.getAccounts(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Account>? {
                     if array.count > 0 {
                         let account = array[0] as Account?
-                        self.testGetAccount(account!.accountId)
+                        self.testGetAccount(accountId: account!.accountId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -872,10 +872,10 @@ class EnterpriseAccountTests {
         var request = EnterpriseAccountRequest()
         request.getAccount(accountId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Account? {
                         print(account)
@@ -898,12 +898,12 @@ class EnterpriseBillTests {
         let request = EnterpriseBillRequest()
         request.getBills(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Bill>? {
                     if array.count > 0 {
                         let bill = array[0] as Bill?
-                        self.testGetBill(bill!.billId)
+                        self.testGetBill(billId: bill!.billId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -917,10 +917,10 @@ class EnterpriseBillTests {
         var request = EnterpriseBillRequest()
         request.getBill(billId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Bill? {
                         print(account)
@@ -943,12 +943,12 @@ class EnterpriseCustomerTests {
         let request = EnterpriseCustomerRequest()
         request.getCustomers(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Customer>? {
                     if array.count > 0 {
                         let customer = array[0] as Customer?
-                        self.testGetCustomer(customer!.customerId)
+                        self.testGetCustomer(customerId: customer!.customerId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -962,10 +962,10 @@ class EnterpriseCustomerTests {
         var request = EnterpriseCustomerRequest()
         request.getCustomer(customerId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Customer? {
                         print(account)
@@ -988,12 +988,12 @@ class EnterpriseDepositTests {
         let request = EnterpriseDepositRequest()
         request.getDeposits(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Deposit>? {
                     if array.count > 0 {
                         let deposit = array[0] as Deposit?
-                        self.testGetDeposit(deposit!.depositId)
+                        self.testGetDeposit(depositId: deposit!.depositId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -1007,10 +1007,10 @@ class EnterpriseDepositTests {
         var request = EnterpriseDepositRequest()
         request.getDeposit(depositId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Deposit? {
                         print(account)
@@ -1033,12 +1033,12 @@ class EnterpriseMerchantTests {
         let request = EnterpriseMerchantRequest()
         request.getMerchants(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Merchant>? {
                     if array.count > 0 {
                         let merchant = array[0] as Merchant?
-                        self.testGetMerchant(merchant!.merchantId)
+                        self.testGetMerchant(merchantId: merchant!.merchantId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -1052,10 +1052,10 @@ class EnterpriseMerchantTests {
         var request = EnterpriseMerchantRequest()
         request.getMerchant(merchantId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Merchant? {
                         print(account)
@@ -1078,12 +1078,12 @@ class EnterpriseTransferTests {
         let request = EnterpriseTransferRequest()
         request.getTransfers(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Transfer>? {
                     if array.count > 0 {
                         let transfer = array[0] as Transfer?
-                        self.testGetTransfer(transfer!.transferId)
+                        self.testGetTransfer(transferId: transfer!.transferId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -1097,10 +1097,10 @@ class EnterpriseTransferTests {
         var request = EnterpriseTransferRequest()
         request.getTransfer(transferId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Transfer? {
                         print(account)
@@ -1123,12 +1123,12 @@ class EnterpriseWithdrawalTests {
         let request = EnterpriseWithdrawalRequest()
         request.getWithdrawals(){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if let array = response as Array<Withdrawal>? {
                     if array.count > 0 {
                         let withdrawal = array[0] as Withdrawal?
-                        self.testGetWithdrawal(withdrawal!.withdrawalId)
+                        self.testGetWithdrawal(withdrawalId: withdrawal!.withdrawalId)
                         print(array)
                     } else {
                         print("No accounts found")
@@ -1142,10 +1142,10 @@ class EnterpriseWithdrawalTests {
         var request = EnterpriseWithdrawalRequest()
         request.getWithdrawal(withdrawalId){ (response, error) in
             if (error != nil) {
-                print(error)
+                print(error!)
             } else {
                 if (error != nil) {
-                    print(error)
+                    print(error!)
                 } else {
                     if let account = response as Withdrawal? {
                         print(account)

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class Geocode {
+open class Geocode {
     let lng: NSNumber
     let lat: NSNumber
 
@@ -24,12 +24,12 @@ public class Geocode {
     }
 }
 
-public class Address {
-    public let streetNumber:String
-    public let streetName:String
-    public let city:String
-    public let state:String
-    public let zipCode:String
+open class Address {
+    open let streetNumber:String
+    open let streetName:String
+    open let city:String
+    open let state:String
+    open let zipCode:String
     
     internal init(data: JSON) {
         streetName = data["street_name"].string ?? ""
@@ -49,6 +49,6 @@ public class Address {
     
     internal func toDict() -> Dictionary<String,AnyObject> {
         let dict = ["street_name":streetName,"street_number":streetNumber,"state":state, "city":city, "zip":zipCode]
-        return dict
+        return dict as Dictionary<String, AnyObject>
     }
 }

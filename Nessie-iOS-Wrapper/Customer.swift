@@ -9,11 +9,11 @@
 import Foundation
 import SwiftyJSON
 
-public class Customer: JsonParser {
-    public var firstName: String
-    public var lastName: String
-    public var address: Address
-    public var customerId: String
+open class Customer: JsonParser {
+    open var firstName: String
+    open var lastName: String
+    open var address: Address
+    open var customerId: String
     
     public init(firstName: String, lastName: String, address: Address, customerId: String) {
         self.firstName = firstName
@@ -30,14 +30,14 @@ public class Customer: JsonParser {
     }
 }
 
-public class CustomerRequest {
-    private var requestType: HTTPType!
-    private var accountId: String?
-    private var customerId: String?
+open class CustomerRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var accountId: String?
+    fileprivate var customerId: String?
     
     public init () {}
     
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         
         var requestString = "\(baseString)/customers/"
         if let accountId = accountId {
@@ -54,26 +54,26 @@ public class CustomerRequest {
     }
 
     // APIs
-    public func getCustomers(completion:(customersArrays: Array<Customer>?, error: NSError?) -> Void) {
+    open func getCustomers(_ completion:@escaping (_ customersArrays: Array<Customer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customersArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(customersArrays: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customersArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getCustomer(customerId: String, completion: (customer: Customer?, error: NSError?) -> Void) {
+    open func getCustomer(_ customerId: String, completion: @escaping (_ customer: Customer?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.customerId = customerId
         
@@ -81,16 +81,16 @@ public class CustomerRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customer: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customer: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
-    public func getCustomerFromAccountId(accountId: String, completion: (customersArrays: Customer?, error: NSError?) -> Void) {
+    open func getCustomerFromAccountId(_ accountId: String, completion: @escaping (_ customersArrays: Customer?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -98,16 +98,16 @@ public class CustomerRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customersArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customersArrays: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
-    public func postCustomer(newCustomer: Customer, completion: (customerResponse: BaseResponse<Customer>?, error: NSError?) -> Void) {
+    open func postCustomer(_ newCustomer: Customer, completion: @escaping (_ customerResponse: BaseResponse<Customer>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.POST
         
         let nseClient = NSEClient.sharedInstance
@@ -119,29 +119,29 @@ public class CustomerRequest {
                        "state": newCustomer.address.state,
                        "zip": newCustomer.address.zipCode]
 
-        let params: Dictionary<String, AnyObject> = ["first_name": newCustomer.firstName,
-                                                     "last_name": newCustomer.lastName,
-                                                     "address": address]
+        let params: Dictionary<String, AnyObject> = ["first_name": newCustomer.firstName as AnyObject,
+                                                     "last_name": newCustomer.lastName as AnyObject,
+                                                     "address": address as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(customerResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customerResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customerResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func putCustomer(updatedCustomer: Customer, completion: (customerResponse: BaseResponse<Customer>?, error: NSError?) -> Void) {
+    open func putCustomer(_ updatedCustomer: Customer, completion: @escaping (_ customerResponse: BaseResponse<Customer>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.PUT
         customerId = updatedCustomer.customerId
         
@@ -154,24 +154,24 @@ public class CustomerRequest {
                        "state": updatedCustomer.address.state,
                        "zip": updatedCustomer.address.zipCode]
         
-        let params: Dictionary<String, AnyObject> = ["first_name": updatedCustomer.firstName,
-                                                     "last_name": updatedCustomer.lastName,
-                                                     "address": address]
+        let params: Dictionary<String, AnyObject> = ["first_name": updatedCustomer.firstName as AnyObject,
+                                                     "last_name": updatedCustomer.lastName as AnyObject,
+                                                     "address": address as AnyObject]
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(customerResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(customerResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Customer>(data: json)
-                completion(customerResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }

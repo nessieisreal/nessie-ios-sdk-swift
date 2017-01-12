@@ -17,20 +17,20 @@ public enum BillStatus : String {
     case Unknown
 }
 
-public class Bill: JsonParser {
+open class Bill: JsonParser {
     
-    public let billId: String
-    public let status: BillStatus
-    public var payee: String
-    public var nickname: String? = nil
-    public var creationDate: NSDate?
-    public var paymentDate: NSDate? = nil
-    public var recurringDate: Int?
-    public var upcomingPaymentDate: NSDate? = nil
-    public let paymentAmount: Int
-    public var accountId: String
+    open let billId: String
+    open let status: BillStatus
+    open var payee: String
+    open var nickname: String? = nil
+    open var creationDate: Date?
+    open var paymentDate: Date? = nil
+    open var recurringDate: Int?
+    open var upcomingPaymentDate: Date? = nil
+    open let paymentAmount: Int
+    open var accountId: String
     
-    public init (status: BillStatus, payee: String, nickname: String?, creationDate: NSDate?, paymentDate: NSDate?, recurringDate: Int?, upcomingPaymentDate: NSDate?, paymentAmount: Int, accountId: String) {
+    public init (status: BillStatus, payee: String, nickname: String?, creationDate: Date?, paymentDate: Date?, recurringDate: Int?, upcomingPaymentDate: Date?, paymentAmount: Int, accountId: String) {
         self.billId = ""
         self.status = status
         self.payee = payee
@@ -49,28 +49,28 @@ public class Bill: JsonParser {
         self.payee = data["_payee"].string ?? ""
         self.nickname = data["nickname"].string ?? ""
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-dd-MM"
 
-        self.creationDate = dateFormatter.dateFromString(data["creation_date"].string ?? "")
-        self.paymentDate = dateFormatter.dateFromString(data["payment_date"].string ?? "")
+        self.creationDate = dateFormatter.date(from: data["creation_date"].string ?? "")
+        self.paymentDate = dateFormatter.date(from: data["payment_date"].string ?? "")
         self.recurringDate = data["recurring_date"].int ?? 0
-        self.upcomingPaymentDate = dateFormatter.dateFromString(data["upcoming_payment_date"].string ?? "")
+        self.upcomingPaymentDate = dateFormatter.date(from: data["upcoming_payment_date"].string ?? "")
         self.paymentAmount = data["payment_amount"].int ?? 0
         self.accountId = data["account_id"].string ?? ""
     }
 }
 
-public class BillRequest {
-    private var requestType: HTTPType!
-    private var billId: String?
-    private var accountId: String?
-    private var accountType: AccountType?
-    private var customerId: String?
+open class BillRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var billId: String?
+    fileprivate var accountId: String?
+    fileprivate var accountType: AccountType?
+    fileprivate var customerId: String?
 
     public init () {}
     
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
 
         var requestString = "\(baseString)"
         if (self.accountId != nil) {
@@ -91,7 +91,7 @@ public class BillRequest {
         
         if (self.requestType == HTTPType.GET && self.accountId == nil && self.accountType != nil) {
             var typeParam = self.accountType!.rawValue
-            typeParam = typeParam.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+            typeParam = typeParam.replacingOccurrences(of: " ", with: "%20")
             requestString += "?type=\(typeParam)&key=\(NSEClient.sharedInstance.getKey())"
             return requestString
         }
@@ -102,7 +102,7 @@ public class BillRequest {
     }
     
     // APIs
-    public func getAccountBills(accountId: String, completion: (billsArrays: Array<Bill>?, error: NSError?) -> Void) {
+    open func getAccountBills(_ accountId: String, completion: @escaping (_ billsArrays: Array<Bill>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -110,16 +110,16 @@ public class BillRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billsArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(billsArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func getBill(billId: String, completion: (bill:Bill?, error: NSError?) -> Void) {
+    open func getBill(_ billId: String, completion: @escaping (_ bill:Bill?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.GET
         self.billId = billId
         
@@ -127,16 +127,16 @@ public class BillRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(bill: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(bill: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
     
-    public func getCustomerBills(customerId: String, completion: (billsArrays: Array<Bill>?, error: NSError?) -> Void) {
+    open func getCustomerBills(_ customerId: String, completion: @escaping (_ billsArrays: Array<Bill>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.GET
         self.customerId = customerId
         
@@ -144,16 +144,16 @@ public class BillRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billsArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(billsArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
     
-    public func postBill(newBill: Bill, completion: (billResponse: BaseResponse<Bill>?, error: NSError?) -> Void) {
+    open func postBill(_ newBill: Bill, completion: @escaping (_ billResponse: BaseResponse<Bill>?, _ error: NSError?) -> Void) {
         
         self.requestType = HTTPType.POST
         self.accountId = newBill.accountId
@@ -161,86 +161,86 @@ public class BillRequest {
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         
-        var params: Dictionary<String, AnyObject> = ["status": newBill.status.rawValue, "payee": newBill.payee, "payment_amount": newBill.paymentAmount]
+        var params: Dictionary<String, AnyObject> = ["status": newBill.status.rawValue as AnyObject, "payee": newBill.payee as AnyObject, "payment_amount": newBill.paymentAmount as AnyObject]
 
         if let nickname = newBill.nickname as String? {
-            params["nickname"] = nickname
+            params["nickname"] = nickname as AnyObject?
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-dd-MM"
         
-        if let paymentDate = newBill.paymentDate as NSDate? {
-            let dateString = dateFormatter.stringFromDate(paymentDate)
-            params["payment_date"] = dateString
+        if let paymentDate = newBill.paymentDate as Date? {
+            let dateString = dateFormatter.string(from: paymentDate)
+            params["payment_date"] = dateString as AnyObject?
         }
         
         if let recurringDate = newBill.recurringDate as Int? {
-            params["recurring_date"] = recurringDate
+            params["recurring_date"] = recurringDate as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(billResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(billResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func putBill(updatedBill: Bill, completion: (billResponse: BaseResponse<Bill>?, error: NSError?) -> Void) {
+    open func putBill(_ updatedBill: Bill, completion: @escaping (_ billResponse: BaseResponse<Bill>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.PUT
         self.billId = updatedBill.billId
 
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         
-        var params: Dictionary<String, AnyObject> = ["status": updatedBill.status.rawValue, "payee": updatedBill.payee, "payment_amount": updatedBill.paymentAmount]
+        var params: Dictionary<String, AnyObject> = ["status": updatedBill.status.rawValue as AnyObject, "payee": updatedBill.payee as AnyObject, "payment_amount": updatedBill.paymentAmount as AnyObject]
         
         if let nickname = updatedBill.nickname as String? {
-            params["nickname"] = nickname
+            params["nickname"] = nickname as AnyObject?
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-dd-MM"
         
-        if let paymentDate = updatedBill.paymentDate as NSDate? {
-            let dateString = dateFormatter.stringFromDate(paymentDate)
-            params["payment_date"] = dateString
+        if let paymentDate = updatedBill.paymentDate as Date? {
+            let dateString = dateFormatter.string(from: paymentDate)
+            params["payment_date"] = dateString as AnyObject?
         }
         
         if let recurringDate = updatedBill.recurringDate as Int? {
-            params["recurring_date"] = recurringDate
+            params["recurring_date"] = recurringDate as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(billResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Bill>(data: json)
-                completion(billResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func deleteBill(billId: String, completion: (billResponse: BaseResponse<Bill>?, error: NSError?) -> Void) {
+    open func deleteBill(_ billId: String, completion: @escaping (_ billResponse: BaseResponse<Bill>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.DELETE
         self.billId = billId
         
@@ -248,10 +248,10 @@ public class BillRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType!)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(billResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let response = BaseResponse<Bill>(requestArray: nil, object: nil, message: "Bill deleted")
-                completion(billResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }

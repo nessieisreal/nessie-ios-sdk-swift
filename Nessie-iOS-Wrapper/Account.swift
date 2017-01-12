@@ -16,15 +16,15 @@ public enum AccountType: String {
     case Unknown = ""
 }
 
-public class Account: JsonParser {
+open class Account: JsonParser {
     
-    public var accountId: String
-    public var accountType: AccountType
-    public var nickname: String
-    public var rewards: Int
-    public var balance: Int
-    public var accountNumber: String?
-    public var customerId: String
+    open var accountId: String
+    open var accountType: AccountType
+    open var nickname: String
+    open var rewards: Int
+    open var balance: Int
+    open var accountNumber: String?
+    open var customerId: String
     
     public init(accountId: String, accountType: AccountType, nickname: String, rewards: Int, balance: Int, accountNumber: String?, customerId: String) {
         self.accountId = accountId
@@ -47,15 +47,15 @@ public class Account: JsonParser {
     }
 }
 
-public class AccountRequest {
-    private var requestType: HTTPType!
-    private var accountId: String?
-    private var accountType: AccountType?
-    private var customerId: String?
+open class AccountRequest {
+    fileprivate var requestType: HTTPType!
+    fileprivate var accountId: String?
+    fileprivate var accountType: AccountType?
+    fileprivate var customerId: String?
     
     public init () {}
 
-    private func buildRequestUrl() -> String {
+    fileprivate func buildRequestUrl() -> String {
         
         var requestString = "\(baseString)/accounts"
         if let accountId = accountId {
@@ -72,7 +72,7 @@ public class AccountRequest {
         
         if (self.requestType == HTTPType.GET && self.accountId == nil && self.accountType != nil) {
             var typeParam = self.accountType!.rawValue
-            typeParam = typeParam.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+            typeParam = typeParam.replacingOccurrences(of: " ", with: "%20")
             requestString += "?type=\(typeParam)&key=\(NSEClient.sharedInstance.getKey())"
             return requestString
         }
@@ -83,7 +83,7 @@ public class AccountRequest {
     }
     
     // APIs
-    public func getAccounts(accountType: AccountType?, completion:(accountsArrays: Array<Account>?, error: NSError?) -> Void) {
+    open func getAccounts(_ accountType: AccountType?, completion:@escaping (_ accountsArrays: Array<Account>?, _ error: NSError?) -> Void) {
         requestType = HTTPType.GET
         self.accountType = accountType
 
@@ -91,20 +91,20 @@ public class AccountRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountsArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 guard let data = data else {
-                    completion(accountsArrays: nil, error: genericError)
+                    completion(nil, genericError)
                     return
                 }
                 let json = JSON(data: data)
                 let response = BaseResponse<Account>(data: json)
-                completion(accountsArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
 
-    public func getAccount(accountId: String, completion: (account:Account?, error: NSError?) -> Void) {
+    open func getAccount(_ accountId: String, completion: @escaping (_ account:Account?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.GET
         self.accountId = accountId
         
@@ -112,16 +112,16 @@ public class AccountRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(account: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Account>(data: json)
-                completion(account: response.object, error: nil)
+                completion(response.object, nil)
             }
         })
     }
 
-    public func getCustomerAccounts(customerId: String, completion: (accountsArrays: Array<Account>?, error: NSError?) -> Void) {
+    open func getCustomerAccounts(_ customerId: String, completion: @escaping (_ accountsArrays: Array<Account>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.GET
         self.customerId = customerId
         
@@ -129,75 +129,75 @@ public class AccountRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountsArrays: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Account>(data: json)
-                completion(accountsArrays: response.requestArray, error: nil)
+                completion(response.requestArray, nil)
             }
         })
     }
 
-    public func postAccount(newAccount: Account, completion: (accountResponse: BaseResponse<Account>?, error: NSError?) -> Void) {
+    open func postAccount(_ newAccount: Account, completion: @escaping (_ accountResponse: BaseResponse<Account>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.POST
         self.customerId = newAccount.customerId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
-        var params: Dictionary<String, AnyObject> = ["nickname": newAccount.nickname, "type":newAccount.accountType.rawValue, "balance": newAccount.balance, "rewards": newAccount.rewards]
+        var params: Dictionary<String, AnyObject> = ["nickname": newAccount.nickname as AnyObject, "type":newAccount.accountType.rawValue as AnyObject, "balance": newAccount.balance as AnyObject, "rewards": newAccount.rewards as AnyObject]
         if let accountNumber = newAccount.accountNumber as String? {
-            params["account_number"] = accountNumber
+            params["account_number"] = accountNumber as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(accountResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Account>(data: json)
-                completion(accountResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
 
-    public func putAccount(accountId: String, nickname: String, accountNumber: String?, completion: (accountResponse: BaseResponse<Account>?, error: NSError?) -> Void) {
+    open func putAccount(_ accountId: String, nickname: String, accountNumber: String?, completion: @escaping (_ accountResponse: BaseResponse<Account>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.PUT
         self.accountId = accountId
         
         let nseClient = NSEClient.sharedInstance
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
 
-        var params: Dictionary<String, AnyObject> = ["nickname": nickname]
+        var params: Dictionary<String, AnyObject> = ["nickname": nickname as AnyObject]
         if let newAccountNumber = accountNumber as String? {
-            params["account_number"] = newAccountNumber
+            params["account_number"] = newAccountNumber as AnyObject?
         }
         
         do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
+            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         } catch let error as NSError {
-            request.HTTPBody = nil
-            completion(accountResponse: nil, error: error)
+            request.httpBody = nil
+            completion(nil, error)
         }
         
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let json = JSON(data: data!)
                 let response = BaseResponse<Account>(data: json)
-                completion(accountResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
     
-    public func deleteAccount(accountId: String, completion: (accountResponse: BaseResponse<Account>?, error: NSError?) -> Void) {
+    open func deleteAccount(_ accountId: String, completion: @escaping (_ accountResponse: BaseResponse<Account>?, _ error: NSError?) -> Void) {
         self.requestType = HTTPType.DELETE
         self.accountId = accountId
         
@@ -205,10 +205,10 @@ public class AccountRequest {
         let request = nseClient.makeRequest(buildRequestUrl(), requestType: self.requestType)
         nseClient.loadDataFromURL(request, completion: {(data, error) -> Void in
             if (error != nil) {
-                completion(accountResponse: nil, error: error)
+                completion(nil, error)
             } else {
                 let response = BaseResponse<Account>(requestArray: nil, object: nil, message: "Account deleted")
-                completion(accountResponse: response, error: nil)
+                completion(response, nil)
             }
         })
     }
