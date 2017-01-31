@@ -119,13 +119,7 @@ open class LoanRequest {
                                                "credit_score": newLoan.creditScore,
                                                "monthly_payment": newLoan.monthlyPayment,
                                                "amount": newLoan.amount]
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-dd-MM"
-        if let creationDate = newLoan.creationDate as Date? {
-            params["creationDate"] = dateFormatter.string(from: creationDate)
-        }
-        
+
         if let description = newLoan.description {
             params["description"] = description
         }

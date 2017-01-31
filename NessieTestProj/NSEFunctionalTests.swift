@@ -12,7 +12,7 @@ import NessieFmwk
 
 class AccountTests {
     let client = NSEClient.sharedInstance
-
+    
     init() {
         client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
         self.testGetAccounts()
@@ -50,7 +50,7 @@ class AccountTests {
             }
         })
     }
-
+    
     func testGetCustomerAccounts(customerId: String) {
         AccountRequest().getCustomerAccounts(customerId, completion:{(response, error) in
             if (error != nil) {
@@ -81,7 +81,7 @@ class AccountTests {
             }
         })
     }
-
+    
     func testPutAccount(accountId: String, nickname: String, accountNumber: String?) {
         AccountRequest().putAccount(accountId, nickname: nickname, accountNumber: accountNumber, completion:{(response, error) in
             if (error != nil) {
@@ -94,7 +94,7 @@ class AccountTests {
             }
         })
     }
-
+    
     func testDeleteAccount(accountId: String) {
         AccountRequest().deleteAccount(accountId, completion:{(response, error) in
             if (error != nil) {
@@ -111,7 +111,7 @@ class AccountTests {
 
 class ATMTests {
     let client = NSEClient.sharedInstance
-
+    
     init() {
         client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
         
@@ -147,7 +147,7 @@ class ATMTests {
             }
         })
     }
-
+    
     func testGetPreviousAtms(previousString: String) {
         ATMRequest().getPreviousAtms(previousString, completion:{(response, error) in
             if (error != nil) {
@@ -158,7 +158,7 @@ class ATMTests {
             }
         })
     }
-
+    
 }
 
 class BillTests {
@@ -166,7 +166,7 @@ class BillTests {
     
     init() {
         client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
-
+        
         testGetAllBills()
     }
     
@@ -235,7 +235,7 @@ class BillTests {
             }
         })
     }
-
+    
     func testPutBill(bill: Bill) {
         bill.payee = "Raul"
         BillRequest().putBill(bill, completion:{(response, error) in
@@ -471,36 +471,95 @@ class DepositsTests {
 
 class LoanTests {
     let client = NSEClient.sharedInstance
-    
+    let account: Account = Account(accountId: "57d32a5ce63c5995587e85ec",
+                                   accountType:.CreditCard,
+                                   nickname: "Hola",
+                                   rewards: 10,
+                                   balance: 100,
+                                   accountNumber: "1234567890123456",
+                                   customerId: "57d0c20d1fd43e204dd48282")
     init() {
         client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
         
-        testGetAllLoansFromAccount()
+        testCreateLoan()
     }
     
-    func testGetAllLoansFromAccount() {
-        let account: Account = Account(accountId: "57d32a5ce63c5995587e85ec",
-                                       accountType:.CreditCard,
-                                       nickname: "Hola",
-                                       rewards: 10,
-                                       balance: 100,
-                                       accountNumber: "1234567890123456",
-                                       customerId: "57d0c20d1fd43e204dd48282")
-        AccountRequest().postAccount(account) { (response, error) in
-            let loan = Loan(loanId: "abcd1234", type: .home, status: .approved, creditScore: 800, monthlyPayment: 50, amount: 100, creationDate: Date(), description: "A home loan for the ages")
-            LoanRequest().postLoan(loan, accountId: "57d32a5ce63c5995587e85ec", completion: { (loanResponse, error) in
-                if let error = error {
-                    print(error)
+    func testGetLoans(accountId: String) {
+        LoanRequest().getLoansFromAccountId(accountId) { (loans, error) in
+            if let error = error {
+                print(error)
+            }
+            if let loans = loans {
+                print("\(loans.count) loans")
+                for loan in loans {
+                    print(loan.description ?? "Amount: \(loan.amount), credit score: \(loan.creditScore)")
                 }
-                else {
-                    let loanResponse = loanResponse as BaseResponse<Loan>?
-                    let message = loanResponse?.message
-                    let loanCreated = loanResponse?.object
-                    print("\(message): \(loanCreated)")
-                }
-            })
+            }
         }
-        
+    }
+    
+    func testCreateLoan() {
+        AccountRequest().postAccount(account) { (response, error0) in
+            if let error = error0 {
+                print(error)
+            }
+            else {
+                let accountId = response?.object?.accountId ?? ""
+                let loan = Loan(loanId: "abcd1234", type: .home, status: .approved, creditScore: 800, monthlyPayment: 50, amount: 100, creationDate: Date(), description: "A home loan for the ages")
+                LoanRequest().postLoan(loan, accountId: accountId, completion: { (loanResponse, error) in
+                    if let error = error {
+                        print(error)
+                    }
+                    else if let loanResponse = loanResponse {
+                        let message = loanResponse.message
+                        let loanCreated = loanResponse.object
+                        print("\(message): \(loanCreated)")
+                        
+//                        self.testGetLoans(accountId: accountId)
+//                        self.testGetLoan(loanId: loan.loanId)
+//                        self.testUpdateLoan(loan: loanCreated!)
+                        self.testDeleteLoan(loanId: loanCreated!.loanId)
+                    }
+                })
+            }
+        }
+    }
+    
+    func testGetLoan(loanId: String) {
+        LoanRequest().getLoan(loanId) { (loan, error) in
+            if let error = error {
+                print(error)
+            }
+            if let loan = loan {
+                print("Amount: \(loan.amount), credit score: \(loan.creditScore)")
+            }
+        }
+    }
+    
+    func testUpdateLoan(loan: Loan) {
+        let originalLoanId = loan.loanId
+        loan.creditScore = 600
+        LoanRequest().putLoan(loan) { (loanResponse, error) in
+            if let error = error {
+                print(error)
+            }
+            if let loanResponse = loanResponse, let loan = loanResponse.object {
+                print(loanResponse.message!)
+                self.testGetLoan(loanId: originalLoanId)
+            }
+        }
+    }
+    
+    func testDeleteLoan(loanId: String) {
+        LoanRequest().deleteLoan(loanId) { (loanResponse, error) in
+            if let error = error {
+                print(error)
+            }
+            if let loanResponse = loanResponse {
+                print(loanResponse.message!)
+                self.testGetLoan(loanId: loanId)
+            }
+        }
     }
 }
 
@@ -524,10 +583,10 @@ class PurchasesTests {
                                       name: "Best Productions",
                                       category: ["Production"],
                                       address: Address(streetName: "Lafayette St.",
-                                        streetNumber: "5901",
-                                        city: "Brooklyn",
-                                        state: "NY",
-                                        zipCode: "07009"),
+                                                       streetNumber: "5901",
+                                                       city: "Brooklyn",
+                                                       state: "NY",
+                                                       zipCode: "07009"),
                                       geocode: Geocode(lng: -1, lat: 33))
     
     func testGetPurchase(PurchaseId: String) {
@@ -593,7 +652,7 @@ class PurchasesTests {
             }
         })
     }
-
+    
     func testPostPurchase() {
         let purchaseToCreate = Purchase(merchantId: "57cf75cea73e494d8675ec49", status: .Cancelled, medium: .Balance, payerId: account.accountId, amount: 4.5, type: "merchant", purchaseDate: Date(), description: "Description", purchaseId: "asd")
         PurchaseRequest().postPurchase(purchaseToCreate, accountId: account.accountId, completion:{(response, error) in
@@ -885,7 +944,7 @@ class EnterpriseAccountTests {
     }
     
     func testGetAccounts() {
-    let request = EnterpriseAccountRequest()
+        let request = EnterpriseAccountRequest()
         request.getAccounts(){ (response, error) in
             if (error != nil) {
                 print(error!)
@@ -902,7 +961,7 @@ class EnterpriseAccountTests {
             }
         }
     }
-
+    
     func testGetAccount(accountId: String) {
         var request = EnterpriseAccountRequest()
         request.getAccount(accountId){ (response, error) in
