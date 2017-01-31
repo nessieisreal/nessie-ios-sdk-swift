@@ -52,5 +52,7 @@ class ViewController: UIViewController {
     @IBAction func testWithdrawalsRequests(sender: UIButton) {
         let _ = WithdrawalsTests()
     }
-    
+    @IBAction func testLoanRequests(sender: UIButton) {
+        let _ = LoanTests()
+    }
 }

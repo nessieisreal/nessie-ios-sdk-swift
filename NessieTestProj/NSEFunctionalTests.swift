@@ -469,6 +469,41 @@ class DepositsTests {
     }
 }
 
+class LoanTests {
+    let client = NSEClient.sharedInstance
+    
+    init() {
+        client.setKey("bca7093ce9c023bb642d0734b29f1ad2")
+        
+        testGetAllLoansFromAccount()
+    }
+    
+    func testGetAllLoansFromAccount() {
+        let account: Account = Account(accountId: "57d32a5ce63c5995587e85ec",
+                                       accountType:.CreditCard,
+                                       nickname: "Hola",
+                                       rewards: 10,
+                                       balance: 100,
+                                       accountNumber: "1234567890123456",
+                                       customerId: "57d0c20d1fd43e204dd48282")
+        AccountRequest().postAccount(account) { (response, error) in
+            let loan = Loan(loanId: "abcd1234", type: .home, status: .approved, creditScore: 800, monthlyPayment: 50, amount: 100, creationDate: Date(), description: "A home loan for the ages")
+            LoanRequest().postLoan(loan, accountId: "57d32a5ce63c5995587e85ec", completion: { (loanResponse, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    let loanResponse = loanResponse as BaseResponse<Loan>?
+                    let message = loanResponse?.message
+                    let loanCreated = loanResponse?.object
+                    print("\(message): \(loanCreated)")
+                }
+            })
+        }
+        
+    }
+}
+
 class PurchasesTests {
     let client = NSEClient.sharedInstance
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D58F258CB981762E988BC09 /* Pods_Nessie_iOS_WrapperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047FB39A476B2A2254D31988 /* Pods_Nessie_iOS_WrapperTests.framework */; };
+		1F1CF43B1E3FD0E3009059EB /* Loan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF43A1E3FD0E3009059EB /* Loan.swift */; };
+		1F1CF43E1E3FD8F7009059EB /* NSEFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */; };
 		4BE174F505915450ACE71C26 /* Pods_NessieTestProj.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9374CA486108DBF4C71F232F /* Pods_NessieTestProj.framework */; };
 		5B4B74E61BB98A0600197534 /* NessieFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; };
 		5B4B74E71BB98A0600197534 /* NessieFmwk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -33,7 +35,6 @@
 		B85401A41B0A895400031001 /* Deposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85401A31B0A895400031001 /* Deposit.swift */; };
 		B85401A61B0AE49500031001 /* Withdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85401A51B0AE49500031001 /* Withdrawal.swift */; };
 		B86E4A7D1B0BD3C00076A6D0 /* EnterpriseRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86E4A7C1B0BD3C00076A6D0 /* EnterpriseRequests.swift */; };
-		B86E4A7F1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */; };
 		B8C549F71ACEE595002206AC /* Nessie-iOS-Wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = B8C549F61ACEE595002206AC /* Nessie-iOS-Wrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B8C549FD1ACEE595002206AC /* NessieFmwk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C549F11ACEE595002206AC /* NessieFmwk.framework */; };
 		B8C54A041ACEE595002206AC /* Nessie_iOS_WrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C54A031ACEE595002206AC /* Nessie_iOS_WrapperTests.swift */; };
@@ -81,6 +82,7 @@
 /* Begin PBXFileReference section */
 		047FB39A476B2A2254D31988 /* Pods_Nessie_iOS_WrapperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nessie_iOS_WrapperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B2925DC23D67A8B0304782E /* Pods-Nessie-iOS-Wrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nessie-iOS-Wrapper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nessie-iOS-Wrapper/Pods-Nessie-iOS-Wrapper.debug.xcconfig"; sourceTree = "<group>"; };
+		1F1CF43A1E3FD0E3009059EB /* Loan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loan.swift; sourceTree = "<group>"; };
 		3F65ECC0F92AFCC5AD4C4089 /* Pods-Nessie-iOS-Wrapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nessie-iOS-Wrapper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nessie-iOS-Wrapper/Pods-Nessie-iOS-Wrapper.release.xcconfig"; sourceTree = "<group>"; };
 		44A1DB88D89CE0CE951B7CC9 /* Pods_NessieTestProjTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NessieTestProjTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48FAB78D804C8A747637B6E3 /* Pods-NessieTestProjTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NessieTestProjTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NessieTestProjTests/Pods-NessieTestProjTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				B8411CB11AF97C4000047389 /* Branch.swift */,
 				B81D5BC21B0A87470086B2C6 /* Customer.swift */,
 				B85401A31B0A895400031001 /* Deposit.swift */,
+				1F1CF43A1E3FD0E3009059EB /* Loan.swift */,
 				5BF9F35D1B98A90E000D2D4D /* Purchase.swift */,
 				5BF9F35B1B98A902000D2D4D /* Transfer.swift */,
 				B85401A51B0AE49500031001 /* Withdrawal.swift */,
@@ -659,9 +662,9 @@
 			files = (
 				5BF0FEA01D8C675700223ED4 /* TabViewController.swift in Sources */,
 				B834EB151AE5BB5000379E11 /* ViewController.swift in Sources */,
+				1F1CF43E1E3FD8F7009059EB /* NSEFunctionalTests.swift in Sources */,
 				B834EB131AE5BB5000379E11 /* AppDelegate.swift in Sources */,
 				5BF0FEA21D8C676900223ED4 /* SecondViewController.swift in Sources */,
-				B86E4A7F1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +683,7 @@
 				B85401A61B0AE49500031001 /* Withdrawal.swift in Sources */,
 				B8C54A0E1ACEE5A6002206AC /* NSEClient.swift in Sources */,
 				B8411CAC1AF9706B00047389 /* ATM.swift in Sources */,
+				1F1CF43B1E3FD0E3009059EB /* Loan.swift in Sources */,
 				B85401A41B0A895400031001 /* Deposit.swift in Sources */,
 				B81D5BC31B0A87470086B2C6 /* Customer.swift in Sources */,
 				5BF9F35E1B98A90E000D2D4D /* Purchase.swift in Sources */,
@@ -755,7 +759,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Nessie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -769,7 +773,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Nessie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -852,7 +856,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -895,7 +899,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -924,7 +928,7 @@
 				PRODUCT_NAME = NessieFmwk;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -945,7 +949,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nessie.NessieFmwk;
 				PRODUCT_NAME = NessieFmwk;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
