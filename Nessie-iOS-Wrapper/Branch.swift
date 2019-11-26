@@ -10,13 +10,13 @@ import Foundation
 import SwiftyJSON
 
 open class Branch: JsonParser {
-    open let branchId: String
-    open let name: String
-    open let phoneNumber: String
-    open let hours: Array<String>
-    open let notes: Array<String>
-    open let address: Address
-    open let geocode: Geocode
+    public let branchId: String
+    public let name: String
+    public let phoneNumber: String
+    public let hours: Array<String>
+    public let notes: Array<String>
+    public let address: Address
+    public let geocode: Geocode
     
     public required init(data: JSON) {
         self.branchId = data["_id"].string ?? ""

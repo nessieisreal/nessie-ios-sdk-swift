@@ -18,13 +18,13 @@ public enum AccountType: String {
 
 open class Account: JsonParser {
     
-    open var accountId: String
-    open var accountType: AccountType
-    open var nickname: String
-    open var rewards: Int
-    open var balance: Int
-    open var accountNumber: String?
-    open var customerId: String
+    public var accountId: String
+    public var accountType: AccountType
+    public var nickname: String
+    public var rewards: Int
+    public var balance: Int
+    public var accountNumber: String?
+    public var customerId: String
     
     public init(accountId: String, accountType: AccountType, nickname: String, rewards: Int, balance: Int, accountNumber: String?, customerId: String) {
         self.accountId = accountId

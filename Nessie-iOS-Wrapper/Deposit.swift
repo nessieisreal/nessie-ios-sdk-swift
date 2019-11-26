@@ -22,14 +22,14 @@ public enum TransactionType : String {
 }
 
 open class Deposit: JsonParser {
-    open var depositId: String
-    open var status: BillStatus
-    open var medium: TransactionMedium
-    open var payeeId: String?
-    open var amount: Int
-    open var type: String
-    open var transactionDate: Date?
-    open var description: String?
+    public var depositId: String
+    public var status: BillStatus
+    public var medium: TransactionMedium
+    public var payeeId: String?
+    public var amount: Int
+    public var type: String
+    public var transactionDate: Date?
+    public var description: String?
     
     public init(depositId: String, status: BillStatus, medium: TransactionMedium, payeeId: String?, amount: Int, type: String, transactionDate: Date?, description: String?) {
         self.depositId = depositId

@@ -23,7 +23,7 @@ internal let genericError = NSError(domain:"com.nessie", code:0, userInfo:[NSLoc
 
 open class NSEClient {
     
-    open static var sharedInstance = NSEClient()
+    public static var sharedInstance = NSEClient()
     
     fileprivate var key = ""
     
@@ -63,7 +63,7 @@ open class NSEClient {
         
         // Use NSURLSession to get data from an NSURL
         let loadDataTask = session.dataTask(with: request as URLRequest) { data, response, error in
-            if let responseError = error as? NSError {
+            if let responseError = error as NSError? {
                 completion(nil, responseError)
             } else if let httpResponse = response as? HTTPURLResponse {
                 if (200 ... 299 ~= httpResponse.statusCode) {
@@ -105,9 +105,9 @@ protocol Initable {
 
 open class BaseClass: Initable {
     
-    open let previuosPage: String
-    open let nextPage: String
-    open let requestArray: Array<AnyObject>
+    public let previuosPage: String
+    public let nextPage: String
+    public let requestArray: Array<AnyObject>
     
     required public init(data:JSON) {
         self.requestArray = data["data"].arrayValue.map({Atm(data:$0)})
@@ -119,9 +119,9 @@ open class BaseClass: Initable {
 
 open class BaseResponse<T:JsonParser> {
     
-    open var requestArray: Array<T>?
-    open var object: T?
-    open var message: String?
+    public var requestArray: Array<T>?
+    public var object: T?
+    public var message: String?
     
     internal init(data: JSON) {
         if (data["data"].null == nil) {

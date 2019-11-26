@@ -10,10 +10,10 @@ import Foundation
 import SwiftyJSON
 
 open class Customer: JsonParser {
-    open var firstName: String
-    open var lastName: String
-    open var address: Address
-    open var customerId: String
+    public var firstName: String
+    public var lastName: String
+    public var address: Address
+    public var customerId: String
     
     public init(firstName: String, lastName: String, address: Address, customerId: String) {
         self.firstName = firstName

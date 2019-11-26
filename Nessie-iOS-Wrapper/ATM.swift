@@ -52,7 +52,7 @@ open class ATMRequest {
         }
         else if !(self.latitude == nil && self.longitude == nil && self.radius == nil) {
             print("Latitude, longitude, and radius are optionals. But if one is used, all are required.")
-            print("You provided lat:\(self.latitude) long:\(self.longitude) radius:\(self.radius)")
+            print("You provided lat:\(String(describing: self.latitude)) long:\(String(describing: self.longitude)) radius:\(String(describing: self.radius))")
             return ""
         }
         
@@ -102,9 +102,9 @@ open class ATMRequest {
 
 open class AtmResponse {
     
-    open let previousPage: String
-    open let nextPage: String
-    open let requestArray: Array<AnyObject>
+    public let previousPage: String
+    public let nextPage: String
+    public let requestArray: Array<AnyObject>
     
     internal init(data:JSON) {
         self.requestArray = data["data"].arrayValue.map({Atm(data: $0)})
@@ -115,14 +115,14 @@ open class AtmResponse {
 
 open class Atm {
     
-    open let atmId: String
-    open let name: String
-    open let languageList: Array<String>
-    open let address: Address
-    open let geocode: CLLocation
-    open let amountLeft: Int
-    open let accessibility: Bool
-    open let hours: Array<String>
+    public let atmId: String
+    public let name: String
+    public let languageList: Array<String>
+    public let address: Address
+    public let geocode: CLLocation
+    public let amountLeft: Int
+    public let accessibility: Bool
+    public let hours: Array<String>
     
     internal init(data: JSON) {
         self.atmId = data["_id"].string ?? ""

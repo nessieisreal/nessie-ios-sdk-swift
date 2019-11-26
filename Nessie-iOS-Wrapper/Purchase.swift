@@ -10,15 +10,15 @@ import Foundation
 import SwiftyJSON
 
 open class Purchase: JsonParser {
-    open var merchantId: String
-    open let status: BillStatus
-    open var medium: TransactionMedium
-    open let payerId: String?
-    open var amount: Double
-    open let type: String?
-    open var purchaseDate: Date?
-    open var description: String?
-    open let purchaseId: String
+    public var merchantId: String
+    public let status: BillStatus
+    public var medium: TransactionMedium
+    public let payerId: String?
+    public var amount: Double
+    public let type: String?
+    public var purchaseDate: Date?
+    public var description: String?
+    public let purchaseId: String
     
     public init(merchantId: String, status: BillStatus, medium: TransactionMedium, payerId: String?, amount: Double, type: String, purchaseDate: Date?, description: String?, purchaseId: String) {
         self.merchantId = merchantId

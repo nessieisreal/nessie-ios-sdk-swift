@@ -25,11 +25,11 @@ open class Geocode {
 }
 
 open class Address {
-    open let streetNumber:String
-    open let streetName:String
-    open let city:String
-    open let state:String
-    open let zipCode:String
+    public let streetNumber:String
+    public let streetName:String
+    public let city:String
+    public let state:String
+    public let zipCode:String
     
     internal init(data: JSON) {
         streetName = data["street_name"].string ?? ""

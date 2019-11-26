@@ -11,11 +11,11 @@ import SwiftyJSON
 
 open class Merchant: JsonParser {
     
-    open let merchantId: String
-    open var name: String
-    open var category: Array<String>
-    open var address: Address
-    open var geocode: Geocode
+    public let merchantId: String
+    public var name: String
+    public var category: Array<String>
+    public var address: Address
+    public var geocode: Geocode
     
     public init(merchantId: String, name: String, category: Array<String>, address: Address, geocode: Geocode) {
         self.merchantId = merchantId
