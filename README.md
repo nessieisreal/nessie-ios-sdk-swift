@@ -1,5 +1,5 @@
 # Nessie-iOS-Wrapper
-### Note: This SDK is Swift 5.0, please use Xcode 8 and later 😀
+### Note: This SDK is Swift 5.0, please use Xcode 10 and later 😀
 
 ##Synopsis
 Capital One Nessie API SDK written in Swift, using SwiftyJSON for JSON parsing. This SDK can be easily embedded in an iOS project.
