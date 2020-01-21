@@ -152,7 +152,7 @@ open class TransferRequest {
         
         // optional values
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-dd-MM"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         if let transactionDate = newTransfer.transactionDate as Date? {
             let dateString = dateFormatter.string(from: transactionDate)
             params["transaction_date"] = dateString as AnyObject?
