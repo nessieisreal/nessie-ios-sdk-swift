@@ -10,14 +10,14 @@ import Foundation
 import SwiftyJSON
 
 open class Withdrawal: JsonParser {
-    open var withdrawalId: String
-    open var type: TransferType
-    open var transactionDate: Date?
-    open var status: TransferStatus
-    open var payerId: String
-    open var medium: TransactionMedium
-    open var amount: Double
-    open var description: String?
+    public var withdrawalId: String
+    public var type: TransferType
+    public var transactionDate: Date?
+    public var status: TransferStatus
+    public var payerId: String
+    public var medium: TransactionMedium
+    public var amount: Double
+    public var description: String?
     
     public init(withdrawalId: String, type: TransferType, transactionDate: Date?, status: TransferStatus, medium: TransactionMedium, payerId: String, amount: Double, description: String?) {
         self.withdrawalId = withdrawalId

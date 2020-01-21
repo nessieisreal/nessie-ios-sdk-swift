@@ -24,15 +24,15 @@ public enum TransferStatus: String {
 }
 
 open class Transfer: JsonParser {
-    open var transferId: String
-    open var type: TransferType
-    open var transactionDate: Date?
-    open var status: TransferStatus
-    open var medium: TransactionMedium
-    open var payerId: String
-    open var payeeId: String
-    open var amount: Double
-    open var description: String?
+    public var transferId: String
+    public var type: TransferType
+    public var transactionDate: Date?
+    public var status: TransferStatus
+    public var medium: TransactionMedium
+    public var payerId: String
+    public var payeeId: String
+    public var amount: Double
+    public var description: String?
     
     public init(transferId: String, type: TransferType, transactionDate: Date?, status: TransferStatus, medium: TransactionMedium, payerId: String, payeeId: String, amount: Double, description: String?) {
         self.transferId = transferId

@@ -53,24 +53,24 @@
 		0082ED78F1919A4340DA047F01AC1426 /* Pods-Nessie-iOS-WrapperTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Nessie-iOS-WrapperTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		05CA09B061E193906653AC21FD3A94F1 /* SwiftyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-umbrella.h"; sourceTree = "<group>"; };
 		0957FDD9B6FFD6D9C4F69320760D99A5 /* Pods-Nessie-iOS-WrapperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Nessie-iOS-WrapperTests.release.xcconfig"; sourceTree = "<group>"; };
-		0CEEB839F2BD3491B5E2B9333B8D97CF /* Pods-NessieTestProj.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NessieTestProj.modulemap"; sourceTree = "<group>"; };
+		0CEEB839F2BD3491B5E2B9333B8D97CF /* Pods-NessieTestProj.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NessieTestProj.modulemap"; sourceTree = "<group>"; };
 		11B788959D8088D7984C9928B66D9245 /* Pods-NessieTestProjTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NessieTestProjTests-umbrella.h"; sourceTree = "<group>"; };
 		1641FA12F0C70908632F3C64C148E6F0 /* Pods-NessieTestProj-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NessieTestProj-acknowledgements.markdown"; sourceTree = "<group>"; };
 		17B3EC520F5A0D312C7D36C5A610289F /* Pods-NessieTestProj-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NessieTestProj-frameworks.sh"; sourceTree = "<group>"; };
-		18D85987B9C5AFFA5B863CA7C64AE644 /* Pods-Nessie-iOS-Wrapper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Nessie-iOS-Wrapper.modulemap"; sourceTree = "<group>"; };
-		1D4640C28FAD35116FAFE3B21F03D2D1 /* Pods-Nessie-iOS-WrapperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Nessie-iOS-WrapperTests.modulemap"; sourceTree = "<group>"; };
+		18D85987B9C5AFFA5B863CA7C64AE644 /* Pods-Nessie-iOS-Wrapper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Nessie-iOS-Wrapper.modulemap"; sourceTree = "<group>"; };
+		1D4640C28FAD35116FAFE3B21F03D2D1 /* Pods-Nessie-iOS-WrapperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Nessie-iOS-WrapperTests.modulemap"; sourceTree = "<group>"; };
 		2124C8B32E2BB11A7E76D5A4043BAC7B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28A4AE261E372D59AA31F40BC1C14556 /* Pods-NessieTestProjTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NessieTestProjTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2D46EE734217B9101ED183D68976A2FD /* Pods_Nessie_iOS_Wrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Nessie_iOS_Wrapper.framework; path = "Pods-Nessie-iOS-Wrapper.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D46EE734217B9101ED183D68976A2FD /* Pods_Nessie_iOS_Wrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nessie_iOS_Wrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7F7C62EE34D2D271E6E1234A2002B2 /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
-		2E9CCDFA7CDBA3C1955961E2B8623CDE /* Pods-NessieTestProjTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-NessieTestProjTests.modulemap"; sourceTree = "<group>"; };
+		2E9CCDFA7CDBA3C1955961E2B8623CDE /* Pods-NessieTestProjTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-NessieTestProjTests.modulemap"; sourceTree = "<group>"; };
 		31B55D09747918B3B7343C8DEFFE12A8 /* Pods-Nessie-iOS-WrapperTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Nessie-iOS-WrapperTests-frameworks.sh"; sourceTree = "<group>"; };
 		32B9BBA8F5B33E56C38F5546432F66B7 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
 		3452546A765E9D3ED26C8FC8CD7AEA7A /* Pods-Nessie-iOS-WrapperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Nessie-iOS-WrapperTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F30B889A4A840928D1593E3F152851C /* Pods-Nessie-iOS-WrapperTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Nessie-iOS-WrapperTests-resources.sh"; sourceTree = "<group>"; };
 		4C25FB6FCD483CF567528800809BA013 /* Pods-NessieTestProjTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NessieTestProjTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4C69B2B7C357DE70CFF1D1EC375E021E /* Pods_Nessie_iOS_WrapperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Nessie_iOS_WrapperTests.framework; path = "Pods-Nessie-iOS-WrapperTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		528EA19D4C9AC182481C2DB904B08C3E /* Pods_NessieTestProj.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NessieTestProj.framework; path = "Pods-NessieTestProj.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C69B2B7C357DE70CFF1D1EC375E021E /* Pods_Nessie_iOS_WrapperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nessie_iOS_WrapperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		528EA19D4C9AC182481C2DB904B08C3E /* Pods_NessieTestProj.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NessieTestProj.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54EE1941A12FD33F4334FF39554B4AF2 /* Pods-Nessie-iOS-Wrapper-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Nessie-iOS-Wrapper-resources.sh"; sourceTree = "<group>"; };
 		60FF21841EAE815F15619B6EAE36F074 /* Pods-Nessie-iOS-WrapperTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Nessie-iOS-WrapperTests-umbrella.h"; sourceTree = "<group>"; };
 		65843E479E58B6DEFCB3B7BC92408344 /* Pods-Nessie-iOS-Wrapper-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Nessie-iOS-Wrapper-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -79,17 +79,17 @@
 		7B7C55B256A1C554A6A62DC15A68D219 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F46EC0083DFBEA979FBE1F68A091C9E /* Pods-Nessie-iOS-WrapperTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Nessie-iOS-WrapperTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		80ABA22EBB5872FE9C0E53742440A8FA /* Pods-NessieTestProjTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NessieTestProjTests-resources.sh"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94E8D55BC98D7137A26FDC5286B21412 /* Pods-NessieTestProj-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NessieTestProj-resources.sh"; sourceTree = "<group>"; };
 		967987BBB072CECE6C8B8B339BBC04E9 /* Pods-NessieTestProj-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NessieTestProj-umbrella.h"; sourceTree = "<group>"; };
 		96CC7EF921356AAA0619B7F629D7ED3D /* Pods-NessieTestProjTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NessieTestProjTests.release.xcconfig"; sourceTree = "<group>"; };
 		98E5862239FC15FCD3C3E16B4B3C04BD /* Pods-NessieTestProjTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NessieTestProjTests-dummy.m"; sourceTree = "<group>"; };
-		9E09424295C192F91E4F8B2A37F924F4 /* Pods_NessieTestProjTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NessieTestProjTests.framework; path = "Pods-NessieTestProjTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E09424295C192F91E4F8B2A37F924F4 /* Pods_NessieTestProjTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NessieTestProjTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2529D3D348CD75EDBAD37A94FD6585F /* Pods-NessieTestProj-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NessieTestProj-acknowledgements.plist"; sourceTree = "<group>"; };
 		A93BB556BAFD8A9A61CFBBAB1B35908F /* Pods-NessieTestProjTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NessieTestProjTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		B3ED1D6522E2966DDCCAD42A417A3910 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6488711D0EDA317AD8E1C038207F13A /* Pods-NessieTestProjTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NessieTestProjTests-frameworks.sh"; sourceTree = "<group>"; };
-		BBB69C8D1CA40D64594113FDF0F1FEE2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBB69C8D1CA40D64594113FDF0F1FEE2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBF610E40BDF6E542FA21FF7E5491205 /* SwiftyJSON-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-prefix.pch"; sourceTree = "<group>"; };
 		BDE506ECE97701EBA44FDBFF401C1A04 /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		BF30A10886B2ECD3BC9F3904771B63C9 /* Pods-Nessie-iOS-Wrapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Nessie-iOS-Wrapper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		C393640A1E4141F529DF583BDB2027A3 /* Pods-Nessie-iOS-Wrapper-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Nessie-iOS-Wrapper-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C4A9A658C966F6BB111BEDBDEA1F874A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D032A29E584B77AE187E586922267CF5 /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
+		D032A29E584B77AE187E586922267CF5 /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
 		DF9CE288507EB7C0DD52EE3C03B47031 /* Pods-NessieTestProj.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NessieTestProj.release.xcconfig"; sourceTree = "<group>"; };
 		E3DF1343E3D8CC82F1C5FF94077D679A /* Pods-NessieTestProj.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NessieTestProj.debug.xcconfig"; sourceTree = "<group>"; };
 		E745836B8A2B82B1B39A44318B9F6DA4 /* Pods-NessieTestProj-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NessieTestProj-dummy.m"; sourceTree = "<group>"; };
@@ -183,7 +183,6 @@
 				BDE506ECE97701EBA44FDBFF401C1A04 /* SwiftyJSON.swift */,
 				8EC39E1DC11846207722B71AAFE40F98 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -443,14 +442,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 1120;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
 			productRefGroup = CC42594BE5A5C95EDCA9863D9226FE31 /* Products */;
@@ -536,25 +536,38 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -580,6 +593,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3452546A765E9D3ED26C8FC8CD7AEA7A /* Pods-Nessie-iOS-WrapperTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -651,24 +665,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -682,6 +709,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -727,6 +755,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0957FDD9B6FFD6D9C4F69320760D99A5 /* Pods-Nessie-iOS-WrapperTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -762,6 +791,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DF9CE288507EB7C0DD52EE3C03B47031 /* Pods-NessieTestProj.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -819,7 +849,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -886,7 +916,7 @@
 				PRODUCT_NAME = SwiftyJSON;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0.1;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -932,6 +962,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E3DF1343E3D8CC82F1C5FF94077D679A /* Pods-NessieTestProj.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";

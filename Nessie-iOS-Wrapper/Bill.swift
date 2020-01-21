@@ -19,16 +19,16 @@ public enum BillStatus : String {
 
 open class Bill: JsonParser {
     
-    open let billId: String
-    open let status: BillStatus
-    open var payee: String
-    open var nickname: String? = nil
-    open var creationDate: Date?
-    open var paymentDate: Date? = nil
-    open var recurringDate: Int?
-    open var upcomingPaymentDate: Date? = nil
-    open let paymentAmount: Int
-    open var accountId: String
+    public let billId: String
+    public let status: BillStatus
+    public var payee: String
+    public var nickname: String? = nil
+    public var creationDate: Date?
+    public var paymentDate: Date? = nil
+    public var recurringDate: Int?
+    public var upcomingPaymentDate: Date? = nil
+    public let paymentAmount: Int
+    public var accountId: String
     
     public init (status: BillStatus, payee: String, nickname: String?, creationDate: Date?, paymentDate: Date?, recurringDate: Int?, upcomingPaymentDate: Date?, paymentAmount: Int, accountId: String) {
         self.billId = ""

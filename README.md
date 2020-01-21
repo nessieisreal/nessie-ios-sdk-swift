@@ -1,5 +1,5 @@
 # Nessie-iOS-Wrapper
-### Note: This SDK is Swift 3.0 thanks to [UberJason](https://github.com/UberJason). Please use Xcode 8 and later 😀
+### Note: This SDK is Swift 5.0, please use Xcode 10.2 and later 😀
 
 ##Synopsis
 Capital One Nessie API SDK written in Swift, using SwiftyJSON for JSON parsing. This SDK can be easily embedded in an iOS project.
@@ -19,7 +19,7 @@ Any parameter marked as optional in the Nessie documentation are also optional i
 
 In the `getAccounts()` call, `accountType` is optional. If you wish to get all accounts regardless of account type, just pass in a `nil` value for accountType:
 ```swift
-        AccountRequest().getAccounts(nil, completion:{(response, error) in 
+        AccountRequest().getAccounts(nil, completion:{(response, error) in
             ...
         )}
 ```
@@ -31,7 +31,7 @@ In the `getAccounts()` call, `accountType` is optional. If you wish to get all a
         // in this case, address is an object so it needs its own initializer
         let address = Address(streetName: "Street", streetNumber: "1", city: "City", state: "VA", zipCode: "12345")
         let customerToCreate = Customer(firstName: "Victor", lastName: "Lopez", address: address, customerId: "sup3rc00la1ph4num3r1cId")
-        
+
         // send the request using the wrapper!
         CustomerRequest().postCustomer(customerToCreate, completion:{(response, error) in
             if (error != nil) {
