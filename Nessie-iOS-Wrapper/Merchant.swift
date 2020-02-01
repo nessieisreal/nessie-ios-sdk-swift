@@ -97,7 +97,7 @@ open class MerchantRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Merchant>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -138,7 +138,7 @@ open class MerchantRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Merchant>(data: json)
                     completion(response, nil)
                 } catch let error as NSError {
@@ -180,7 +180,7 @@ open class MerchantRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Merchant>(data: json)
                     completion(response, nil)
                 } catch let error as NSError {

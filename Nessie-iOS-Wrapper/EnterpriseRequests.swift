@@ -64,7 +64,7 @@ public struct EnterpriseAccountRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Account>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -114,7 +114,7 @@ public struct EnterpriseBillRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Bill>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -164,7 +164,7 @@ public struct EnterpriseCustomerRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Customer>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -214,7 +214,7 @@ public struct EnterpriseDepositRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Deposit>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -264,7 +264,7 @@ public struct EnterpriseMerchantRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Merchant>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -314,7 +314,7 @@ public struct EnterpriseTransferRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Transfer>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -364,7 +364,7 @@ public struct EnterpriseWithdrawalRequest: Enterprise {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Withdrawal>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {

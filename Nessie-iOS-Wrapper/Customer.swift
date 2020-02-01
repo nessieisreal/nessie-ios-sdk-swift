@@ -89,7 +89,7 @@ open class CustomerRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Customer>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -110,7 +110,7 @@ open class CustomerRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Customer>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
@@ -148,7 +148,7 @@ open class CustomerRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Customer>(data: json)
                     completion(response, nil)
                 } catch let error as NSError {
@@ -187,7 +187,7 @@ open class CustomerRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Customer>(data: json)
                     completion(response, nil)
                 } catch let error as NSError {

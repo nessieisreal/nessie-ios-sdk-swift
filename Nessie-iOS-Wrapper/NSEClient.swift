@@ -70,7 +70,7 @@ open class NSEClient {
                     completion(data, nil)
                 } else {
                     do {
-                        let json = try JSON(data: data!)
+                        let json = try JSON(data: data ?? Data())
                         let errorMessage = json["message"].string ?? "Something went wrong. Check your connection."
                         let culprit = json["culprit"].array
                         let culpritMessage: String = culprit?.first?.rawString() ?? "Unknown reason"
@@ -97,7 +97,7 @@ open class NSEClient {
                 return
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     handler(BaseClass(data: json))
                 } catch let error as NSError {
                     print(error)

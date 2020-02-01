@@ -69,7 +69,7 @@ open class ATMRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = AtmResponse(data: json)
                     completion(response, nil)
                 } catch let error as NSError {

@@ -79,7 +79,7 @@ open class BranchRequest {
                 completion(nil, error)
             } else {
                 do {
-                    let json = try JSON(data: data!)
+                    let json = try JSON(data: data ?? Data())
                     let response = BaseResponse<Branch>(data: json)
                     completion(response.object, nil)
                 } catch let error as NSError {
